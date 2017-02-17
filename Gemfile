@@ -34,6 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 
 gem 'lol_dba'
+gem 'puma', '~> 3.0'
+
 
 
 group :development, :test do
