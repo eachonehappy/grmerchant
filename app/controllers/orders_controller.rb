@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :admin_user? , only: [:index]
 
   # GET /orders
   # GET /orders.json
@@ -38,106 +39,112 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @stat = Stat.first
-    @order = Order.new(order_params)
-    @customer = Customer.find_by_phone(params[:order][:customer][:phone])
-    if @customer
-      @customer_address = CustomerAddress.find_by_address(params[:order][:customer_address][:address])
-      if @customer_address
-        @order.customer_address_id = @customer_address.id
-      else
+
+    if params[:order][:customer_address][:address].present? && params[:order][:customer][:name].present?
+      @stat = Stat.first
+      @order = Order.new(order_params)
+      @customer = Customer.find_by_phone(params[:order][:customer][:phone])
+      if @customer
+        @customer_address = CustomerAddress.find_by_address(params[:order][:customer_address][:address])
+        if @customer_address
+          @order.customer_address_id = @customer_address.id
+        else
+          @customer_address = CustomerAddress.new
+          @customer_address.address = params[:order][:customer_address][:address]
+          @customer_address.customer_id = @customer.id
+          @customer_address.save
+          @order.customer_address_id = @customer_address.id
+        end 
+        @order.user_id = current_user.id
+        @order.customer_id = @customer.id
+
+        @cart_recipes = current_user.recipes
+        
+        @cart_recipes.each do |recipe|
+          @order.order_recipes.build(:recipe_id => recipe.id)
+        end
+        @current_user.cart_recipes.destroy_all
+        if params[:order][:id].reject(&:empty?).present?
+          params[:order][:id].reject(&:empty?).each do |note|
+          @order.notes_orders.build(:description => note)
+          end
+        end
+        if params[:delivery_time].present?
+          @order.delivery_time = params[:delivery_time]
+          unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.preorder = true
+          else
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)  
+          end  
+        else
+          @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/NOW"  
+        end
+        @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
+        respond_to do |format|
+          if @order.save
+            format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
+            format.json { render :show, status: :created, location: @order }
+          else
+            format.html { render :new }
+            format.json { render json: @order.errors, status: :unprocessable_entity }
+          end
+        end 
+      else 
+        @customer = Customer.new
+    
+        @customer.phone = params[:order][:customer][:phone]
+        @customer.name = params[:order][:customer][:name]
+        @customer.save
+       
         @customer_address = CustomerAddress.new
         @customer_address.address = params[:order][:customer_address][:address]
         @customer_address.customer_id = @customer.id
         @customer_address.save
         @order.customer_address_id = @customer_address.id
-      end 
-      @order.user_id = current_user.id
-      @order.customer_id = @customer.id
 
-      @cart_recipes = current_user.recipes
-      
-      @cart_recipes.each do |recipe|
-        @order.order_recipes.build(:recipe_id => recipe.id)
-      end
-      @current_user.cart_recipes.destroy_all
-      if params[:order][:id].reject(&:empty?).present?
-        params[:order][:id].reject(&:empty?).each do |note|
-        @order.notes_orders.build(:description => note)
+        @order.user_id = current_user.id
+        @order.customer_id = @customer.id
+
+        @cart_recipes = current_user.recipes
+        
+        @cart_recipes.each do |recipe|
+          @order.order_recipes.build(:recipe_id => recipe.id)
+        end
+        @current_user.cart_recipes.destroy_all
+        
+        if params[:order][:id].reject(&:empty?).present?
+          params[:order][:id].reject(&:empty?).each do |note|
+          @order.notes_orders.build(:description => note)
+          end
+        end
+        if params[:delivery_time].present?
+          @order.delivery_time = params[:delivery_time]
+          unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.preorder = true
+          else
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)  
+          end  
+        else
+          @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/NOW"  
+        end  
+        @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.count}"
+        respond_to do |format|
+          if @order.save
+            format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
+            format.json { render :show, status: :created, location: @order }
+          else
+            format.html { render :new }
+            format.json { render json: @order.errors, status: :unprocessable_entity }
+          end  
         end
       end
-      if params[:delivery_time].present?
-        @order.delivery_time = params[:delivery_time]
-        unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
-          @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
-          @order.preorder = true
-        else
-          @order.amount = @cart_recipes.map(&:price).inject(0, :+)  
-        end  
-      else
-        @order.amount = @cart_recipes.map(&:price).inject(0, :+)
-        @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/NOW"  
-      end
-      @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
-      respond_to do |format|
-        if @order.save
-          format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
-          format.json { render :show, status: :created, location: @order }
-        else
-          format.html { render :new }
-          format.json { render json: @order.errors, status: :unprocessable_entity }
-        end
-      end 
-    else 
-      @customer = Customer.new
-  
-      @customer.phone = params[:order][:customer][:phone]
-      @customer.name = params[:order][:customer][:name]
-      @customer.save
-     
-      @customer_address = CustomerAddress.new
-      @customer_address.address = params[:order][:customer_address][:address]
-      @customer_address.customer_id = @customer.id
-      @customer_address.save
-      @order.customer_address_id = @customer_address.id
-
-      @order.user_id = current_user.id
-      @order.customer_id = @customer.id
-
-      @cart_recipes = current_user.recipes
-      
-      @cart_recipes.each do |recipe|
-        @order.order_recipes.build(:recipe_id => recipe.id)
-      end
-      @current_user.cart_recipes.destroy_all
-      if params[:order][:id].reject(&:empty?).present?
-        params[:order][:id].reject(&:empty?).each do |note|
-        @order.notes_orders.build(:description => note)
-        end
-      end
-      if params[:delivery_time].present?
-        @order.delivery_time = params[:delivery_time]
-        unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
-          @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
-          @order.preorder = true
-        else
-          @order.amount = @cart_recipes.map(&:price).inject(0, :+)  
-        end  
-      else
-        @order.amount = @cart_recipes.map(&:price).inject(0, :+)
-        @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/NOW"  
-      end  
-      @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.count}"
-      respond_to do |format|
-        if @order.save
-          format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
-          format.json { render :show, status: :created, location: @order }
-        else
-          format.html { render :new }
-          format.json { render json: @order.errors, status: :unprocessable_entity }
-        end  
-      end
-  end
+    else
+      redirect_to new_new_order_path, notice: 'Please enter Name & Address.'
+    end  
   end
 
   # PATCH/PUT /orders/1

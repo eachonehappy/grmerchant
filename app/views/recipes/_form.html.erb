@@ -17,7 +17,7 @@
   <% end %>
   <div class="field">
     <%= f.label :SKU %><br />
-    <%= f.text_field :sku, autofocus: true , :class=> "form-control"%>
+    <%= f.text_field :sku, autofocus: true , :class=> "form-control",:value => "#{last_sku}" , :disabled => true%>
   </div>
   <div class="field">
     <%= f.label :Recipe_Name %><br />

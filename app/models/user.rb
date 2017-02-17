@@ -15,4 +15,6 @@ class User < ActiveRecord::Base
  validates :full_name, presence: true
  validates :address, presence: true
  validates :phone, presence: true, uniqueness: true, length: { minimum: 10, maximum: 10 }
+before_create :set_merchant_pin
+
 end
