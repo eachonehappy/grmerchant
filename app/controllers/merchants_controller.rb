@@ -1,4 +1,5 @@
 class MerchantsController < ApplicationController
+  before_action :authenticate_user!
 	def index
 		@users = User.all.where(:admin => false)
 		@user = User.new
