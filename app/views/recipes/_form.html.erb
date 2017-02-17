@@ -1,0 +1,50 @@
+<div class="x_panel">
+  <div class="x_content">
+  <center>
+  <h1>Add Recipe</h1>
+  </center>
+<%= form_for(@recipe) do |f| %>
+  <% if @recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+      <ul>
+      <% @recipe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :SKU %><br />
+    <%= f.text_field :sku, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :Recipe_Name %><br />
+    <%= f.text_field :name, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :Serving %><br />
+    <%= f.text_field :serving, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :Price %><br />
+    <%= f.text_field :price, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :Veg_NonVeg %><br />
+    <%= f.select :non_veg, options_for_select([['Veg','false'],['NonVeg','true']]),
+      {}, :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :Cusine %><br />
+    <%= f.select :cusine, options_for_select([['Indian','Indian'],['Chinese','Chinese'],['Continental','Continental'],['Italian','Italian']]),
+      {}, :class=> "form-control"%>Continental
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Create Recipe",:class=>"btn btn-success btn-block btn-lg" , data: { turbolinks: false }%>
+  </div>
+<% end %>
+</div>
+</div>

@@ -1,0 +1,68 @@
+<div class="top_nav navbar-fixed-top" style="margin-left: 0px;">
+          <div class="nav_menu">
+            <nav>
+            
+              	<%= link_to root_path, :style=>"background-color:#dedede;", data: { turbolinks: false } do %>
+                <img src="/images/grgrgr.jpg" width="40px" style="padding-top:5px;margin-left:5px;">
+                <%end%>
+
+            <% if current_user.admin %>
+             <ul class="nav navbar-nav navbar-right">
+              
+                <li class="">
+                <div class="inline">
+                
+                <li>
+                	<%= link_to 'Log Out'.html_safe, destroy_user_session_path,
+                        :method => :delete %>
+                </li>
+                <li>
+                <%= link_to 'Recipies' , recipes_path , data: { turbolinks: false },:class=>"user-profile dropdown-toggle" %>
+                </li>
+                <li>
+                <%= link_to 'Orders' , orders_path , data: { turbolinks: false } %>
+                </li>
+               <li>
+                <%= link_to 'Merchants' , merchants_path , data: { turbolinks: false },:class=>"user-profile dropdown-toggle blockquote" %>
+                </li>
+                </div>
+            
+                </li>
+
+         
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav navbar-right">
+              
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle text-uppercase" data-toggle="dropdown" aria-expanded="false">
+                   <%= current_user.full_name%>
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><%= link_to 'My Orders' , my_orders_path, data: { turbolinks: false } %></li>
+                    
+                    <li>
+                    <%= link_to  destroy_user_session_path,
+                        :method => :delete, data: { turbolinks: false } do %>
+                        
+                    <i class="fa fa-sign-out pull-right"></i> Log Out
+                    <%end%>
+                    </li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown">
+                <%= link_to cart_path , :class=> "dropdown-toggle info-number", data: { turbolinks: false } do %>
+                <span><b> CART  </b></span>
+                <i class="fa fa-shopping-cart"></i>
+                <span class="addtocart-count badge bg-green" data-id="<%= current_user.id %>"><%= current_user.cart_recipes.count %></span>
+                <% end %>
+                  
+                 
+                </li>
+              </ul>
+              <% end %>
+            </nav>
+          </div>
+        </div>                        

@@ -1,0 +1,21 @@
+<div class="x_panel">
+  
+  <div class="x_content">
+    <%= form_for(@customer, url: new_new_order_path) do |f| %>
+    <!-- start form for validation -->
+    <form id="demo-form" data-parsley-validate>
+      <label for="fullname">Customer Phone No :</label>
+      <%= f.number_field :phone, autofocus: true ,:class=> "form-control", data: { turbolinks: false } ,:required=>"required", :type=>"tel", :pattern=>"^[2-9]{2}[0-9]{8}$"%>
+     
+
+
+     <br>
+     <%= f.submit "Submit",:class=>"btn btn-success btn-block submit btn-lg" %>
+          
+
+    </form>
+    <% end %>
+    <!-- end form for validations -->
+
+  </div>
+</div>

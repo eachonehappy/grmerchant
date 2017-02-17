@@ -1,0 +1,78 @@
+<div class="x_panel">
+<center>
+  <h3>Order Details</h3></center>
+  <div class="x_content">
+
+<%= form_for(@order) do |f| %>
+<form id="demo-form" data-parsley-validate>
+<% if @customer.phone %>  
+  <%= f.fields_for :customer do |l| %>
+    <div class="field">
+       <label for="fullname">Customer Phone No :</label>
+      <%= l.text_field :phone, :value => @customer.phone, autofocus: true,:class=> "form-control"%>   
+    </div>
+    <div class="field">
+    <label for="fullname">Full Name :</label>
+       
+      <%= l.text_field :name, :value => @customer.name, autofocus: true,:class=> "form-control text-uppercase" %>   
+    </div>
+  <% end %>
+
+  <%= f.fields_for :customer_address do |l| %>
+    <div class="field">
+       <label for="fullname">Customer Address :</label>
+      <%= l.text_area :address, autofocus: true,:value => @addresses.first.address, :id => "newaddress",:class=> "form-control" %>   
+    </div>
+    <div class="field">
+    <label for="fullname">Select From Previous Addresses :</label>
+      <%= l.select(:customer_address_id, @addresses.collect {|c| [c.address]},{},{  :class => "form-control",  :onchange=>"copyIt()"  , :id => "previousaddress", :value=>""})  %>
+    </div>
+  <% end %>
+
+  
+<% else %>
+  <%= f.fields_for :customer do |l| %>
+    <div class="field">
+       <label for="fullname">Customer Phone No :</label>
+      <%= l.text_field :phone, autofocus: true, :value => params[:customer][:phone],:class=> "form-control" %>   
+    </div>
+    <div class="field">
+       <label for="fullname">Full Name :</label>
+      <%= l.text_field :name, autofocus: true,:class=> "form-control" %>   
+    </div>
+  <% end %>
+
+  <%= f.fields_for :customer_address do |l| %>
+    <div class="field">
+       <label for="fullname">Customer Address :</label>
+      <%= l.text_area :address, autofocus: true,:class=> "form-control" %>   
+    </div>
+  <% end %>
+<% end %> 
+
+<%= f.fields_for :notes_address do |l| %>
+    <div class="field">
+       <label for="fullname">Additional Notes :</label>
+      <%= f.select(:id, options_for_select([['No Garlic','No Garlic'],['No Onion','No onion'],['Net Banking','Net Banking']]),{},
+                                   { :multiple => true, :size => 5,:class=>"selectpicker form-control","multiple data-style"=>"btn-white", :style => "background-color: #ffffff;" }
+                                 ) %>   
+    </div>
+  <% end %>
+  <div class="field">  
+  <label for="fullname">Mode of Payment :</label>
+    <%= f.select :mode_of_payment, options_for_select([['Cash','Cash'],['Paytm','Paytm'],['Net Banking','Net Banking']]),{}, { :class => 'form-control', :style => "background-color: #ffffff;" } %>
+  </div>
+<%= render 'shared/preorder_form'%>
+
+    
+
+
+  <div class="actions">
+    <%= f.submit "Confirm Order" ,:class=> "btn btn-success btn-block btn-lg" , data: { turbolinks: false }%>
+  </div>
+  </form>
+<% end %>
+
+
+ </div>
+</div>

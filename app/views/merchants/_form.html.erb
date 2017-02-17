@@ -1,0 +1,49 @@
+<div class="x_panel">
+  <div class="x_content">
+  <center>
+<h1>Add Merchant</h1>
+</center>
+<%= form_for(@user, url: merchants_path) do |f| %>
+
+
+  <div class="field">
+    <%= f.label :Merchant_ID %><br />
+    <%= f.text_field :merchant_pin, autofocus: true , :class=> "form-control"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :Merchant_PIN %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off", :class=> "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Merchant_PIN_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", :class=> "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :full_name %><br />
+    <%= f.text_field :full_name, autofocus: true, :class=> "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_area :address, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :Veg_NonVeg %><br />
+    <%= f.select :non_veg, options_for_select([['NonVeg','true'],['Veg','false']]),
+      {}, :class=> "form-control"%>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Create Merchant" ,:class=>"btn btn-success btn-block btn-lg", data: { turbolinks: false } %>
+  </div>
+<% end %>
+</div>
+</div>

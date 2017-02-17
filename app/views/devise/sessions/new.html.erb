@@ -1,0 +1,29 @@
+ <body class="login">
+    <div>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <form>
+              <h1>Merchant Login</h1>
+              <div>
+              <%= f.text_field :merchant_pin, autofocus: true ,:class =>"form-control",:placeholder=>"Merchant ID"  %>
+                
+              </div>
+              <div>
+              <%= f.password_field :password, autocomplete: "off",:class =>"form-control",:placeholder=>"Merchant Pin" %>
+                
+              </div>
+              <div>
+              <%= f.submit "Log in",:class=>"btn btn-primary btn-block submit", :style => "margin-left:0px;" %>   
+              </div>        
+            </form>
+            <% end %>
+          </section>
+        </div>
+
+       
+      </div>
+    </div>
+  </body>
