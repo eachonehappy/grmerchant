@@ -64,10 +64,17 @@ class OrdersController < ApplicationController
           @order.order_recipes.build(:recipe_id => recipe.id)
         end
         @current_user.cart_recipes.destroy_all
-        if params[:order][:id].reject(&:empty?).present?
-          params[:order][:id].reject(&:empty?).each do |note|
-          @order.notes_orders.build(:description => note)
-          end
+        if params[:n1].present?
+          @order.notes_orders.build(:description => params[:n1]) 
+        end
+        if params[:n2].present?
+          @order.notes_orders.build(:description => params[:n2]) 
+        end
+        if params[:n3].present?
+          @order.notes_orders.build(:description => params[:n3]) 
+        end
+        if params[:n4].present?
+          @order.notes_orders.build(:description => params[:n4]) 
         end
         if params[:delivery_time].present?
           @order.delivery_time = params[:delivery_time]
@@ -113,11 +120,18 @@ class OrdersController < ApplicationController
           @order.order_recipes.build(:recipe_id => recipe.id)
         end
         @current_user.cart_recipes.destroy_all
-        
-        if params[:order][:id].reject(&:empty?).present?
-          params[:order][:id].reject(&:empty?).each do |note|
-          @order.notes_orders.build(:description => note)
-          end
+  
+        if params[:n1].present?
+          @order.notes_orders.build(:description => params[:n1]) 
+        end
+        if params[:n2].present?
+          @order.notes_orders.build(:description => params[:n2]) 
+        end
+        if params[:n3].present?
+          @order.notes_orders.build(:description => params[:n3]) 
+        end
+        if params[:n4].present?
+          @order.notes_orders.build(:description => params[:n4]) 
         end
         if params[:delivery_time].present?
           @order.delivery_time = params[:delivery_time]
@@ -131,7 +145,7 @@ class OrdersController < ApplicationController
           @order.amount = @cart_recipes.map(&:price).inject(0, :+)
           @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/NOW"  
         end  
-        @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.count}"
+        @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
         respond_to do |format|
           if @order.save
             format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }

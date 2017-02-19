@@ -42,6 +42,11 @@ class PagesController < ApplicationController
 
 	def cart
 		@cart_recipes = current_user.recipes
+
+		if @cart_recipes.empty?
+	  	redirect_to root_path, notice: 'Please Add Recipe Kit In Cart'
+	  end 	 
+			
 	end
 
 	def my_orders
