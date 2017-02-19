@@ -7,5 +7,8 @@ class ApplicationController < ActionController::Base
 		redirect_to root_path unless current_user.admin
 	end
 
-
+  def shop_opened
+  	@shop_open = Stat.first.shop_open
+  	redirect_to root_path unless @shop_open
+  end
 end

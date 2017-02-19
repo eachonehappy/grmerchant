@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   post 'availability' => "recipes#availability"
   post 'shop_open' => "pages#shop_open"
   post 'cusine' => "pages#home"
+
+  get 'closed_shop' => "pages#closed_shop"
   
   patch 'update_discount' => "pages#update_discount"
   devise_for :users, controllers: { sessions: 'users/sessions' ,:registrations => "users/registrations" }

@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :admin_user? , only: [:index, :new, :create, :update, :destroy]
-
+  before_action :shop_opened , only: [:add_to_cart]
   # GET /recipes
   # GET /recipes.json
   def index
@@ -67,14 +67,19 @@ class RecipesController < ApplicationController
   end
 
   def add_to_cart
+
     @recipe = Recipe.find(params[:format])
-    @recipe.cart_recipes.build(user_id: current_user.id)
-    @recipe.save
-    if request.xhr?
-      @count = current_user.cart_recipes.count
-      render json: { count: @count , id: current_user.id }
+    if @recipe.availability
+      @recipe.cart_recipes.build(user_id: current_user.id)
+      @recipe.save
+      if request.xhr?
+        @count = current_user.cart_recipes.count
+        render json: { count: @count , id: current_user.id }
+      else
+        redirect_to request.referer_path
+      end
     else
-      redirect_to request.referer_path
+      redirect_to root_path , notice: 'This Recipe is not available for Now' 
     end
   end
 

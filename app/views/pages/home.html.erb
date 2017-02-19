@@ -35,7 +35,7 @@
                   <td><%= recipe.serving %></td>
                   <td><%= recipe.price %></td>
 
-                  <td><%= link_to 'Add', add_to_cart_path(recipe), method: :put, :class=>"addtocart btn btn-success", remote: true, data: { toggle_href: add_to_cart_path(recipe), id: recipe.id } %></td>
+                  <td><%= link_to 'Add', add_to_cart_path(recipe), method: :put, :class=>"addtocart btn btn-success", remote: true, data: { toggle_href: add_to_cart_path(recipe, turbolinks: false), id: recipe.id } %></td>
                
                 </tr>
                 <% end %>

@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :admin_user? , only: [:index]
+  before_action :shop_opened , only: [:new]
 
   # GET /orders
   # GET /orders.json
@@ -86,7 +87,7 @@ class OrdersController < ApplicationController
           end  
         else
           @order.amount = @cart_recipes.map(&:price).inject(0, :+)
-          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/NOW"  
+          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
         end
         @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
         respond_to do |format|
@@ -143,7 +144,7 @@ class OrdersController < ApplicationController
           end  
         else
           @order.amount = @cart_recipes.map(&:price).inject(0, :+)
-          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/NOW"  
+          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
         end  
         @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
         respond_to do |format|

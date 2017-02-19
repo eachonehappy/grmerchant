@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
 	before_action :authenticate_user!
+	before_action :shop_opened , only: [:cart]
 
 	def home
 		@shop_open = Stat.first.shop_open
@@ -34,7 +35,7 @@ class PagesController < ApplicationController
 			end
 			
 		else
-			@recipes = []
+			redirect_to closed_shop_path
 		end	 
 		@orders = Order.all 
 		@stat = Stat.first
@@ -70,5 +71,9 @@ class PagesController < ApplicationController
 		@stat.discount = params[:stat][:discount]
 		@stat.save
 		redirect_to root_path
+	end
+
+	def closed_shop
+		
 	end
 end
