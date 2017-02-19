@@ -1,6 +1,6 @@
 module ApplicationHelper
 	def current_hour
-		Time.now.strftime("%H")
+		Time.current.to_s.split(" ")[1].split(":")[0]
 	end
 
 	def today_date
