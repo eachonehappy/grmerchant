@@ -56,6 +56,7 @@ class OrdersController < ApplicationController
           @customer_address.save
           @order.customer_address_id = @customer_address.id
         end 
+
         @order.user_id = current_user.id
         @order.customer_id = @customer.id
 

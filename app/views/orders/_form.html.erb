@@ -9,7 +9,7 @@
   <%= f.fields_for :customer do |l| %>
     <div class="field">
        <label for="fullname">Customer Phone No :</label>
-      <%= l.text_field :phone, :value => @customer.phone, autofocus: true,:class=> "form-control",disabled: true%>   
+      <%= l.text_field :phone, :value => @customer.phone, autofocus: true,:class=> "form-control",readonly: true%>   
     </div>
     <div class="field">
     <label for="fullname">Full Name :</label>
@@ -34,7 +34,7 @@
   <%= f.fields_for :customer do |l| %>
     <div class="field">
        <label for="fullname">Customer Phone No :</label>
-      <%= l.text_field :phone, autofocus: true, :value => params[:customer][:phone],:class=> "form-control" %>   
+      <%= l.text_field :phone, autofocus: true, :value => params[:customer][:phone],:class=> "form-control",readonly: true %>   
     </div>
     <div class="field">
        <label for="fullname">Full Name :</label>
