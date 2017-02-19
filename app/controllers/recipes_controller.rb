@@ -100,6 +100,12 @@ class RecipesController < ApplicationController
     end
   end
 
+  def import
+    Recipe.import(params[:file])
+
+    redirect_to recipes_path, notice: 'Recipes imported.'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_recipe

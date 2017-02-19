@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   resources :customers
   root to: 'pages#home'
 
+  resources :recipes do
+    collection do
+      post :import
+    end
+  end
+
   get 'cart'=> 'pages#cart'
 
   put 'add_to_cart' => 'recipes#add_to_cart'
