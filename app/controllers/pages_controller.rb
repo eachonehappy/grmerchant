@@ -34,6 +34,7 @@ class PagesController < ApplicationController
 			  end
 			end
 			
+		elsif current_user.admin
 		else
 			redirect_to closed_shop_path
 		end	 
@@ -71,6 +72,48 @@ class PagesController < ApplicationController
 		@stat.discount = params[:stat][:discount]
 		@stat.save
 		redirect_to root_path
+	end
+
+	def sms_accept
+		@stat = Stat.first
+		@stat.toggle(:sms_accept)
+		@stat.save
+	if request.xhr?
+      render json: { id: "sms#{current_user.id}" }
+    else
+      redirect_to request.referer_path
+    end
+	end
+
+	def send_sms
+		
+	end
+
+	def accept_sms
+		@order = Order.find(params[:format])
+		@customer = @order.customer
+		HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+Confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+        @order.sms_status = "Accepted"   
+        @order.save
+        if request.xhr?
+      render json: { count: "Accepted" ,id: @order.id }
+    else
+      redirect_to request.referer_path
+    end
+	end
+
+	def reject_sms
+		@order = Order.find(params[:format])
+		@customer = @order.customer
+
+		HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+Declined+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+        @order.sms_status = "Rejected"   
+        @order.save
+        if request.xhr?
+      render json: {count: "Rejected" , id: @order.id }
+    else
+      redirect_to request.referer_path
+    end
 	end
 
 	def closed_shop

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217124342) do
+ActiveRecord::Schema.define(version: 20170220114736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,13 +75,15 @@ ActiveRecord::Schema.define(version: 20170217124342) do
     t.integer  "user_id"
     t.integer  "customer_id"
     t.integer  "customer_address_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.integer  "amount"
     t.string   "mode_of_payment"
     t.string   "delivery_time"
     t.string   "o_id"
     t.boolean  "preorder",            default: false
+    t.string   "sms_status",          default: "default"
+    t.string   "message"
   end
 
   add_index "orders", ["customer_address_id"], name: "index_orders_on_customer_address_id", using: :btree
@@ -105,6 +107,7 @@ ActiveRecord::Schema.define(version: 20170217124342) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "discount"
+    t.boolean  "sms_accept", default: false
   end
 
   create_table "users", force: :cascade do |t|

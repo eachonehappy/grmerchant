@@ -11,6 +11,7 @@
                   <th>Ordered Recipes</th>
                   <th>Notes</th>
                   <th>Delivery Time</th>
+                  <th>Accept</th>
                   
                 </tr>
               </thead>
@@ -27,7 +28,7 @@
                 <td><%= order.amount %></td>
                 <td class="text-uppercase"><%= order.mode_of_payment %></td>
                 <td class="text-uppercase"><% order.recipes.each do |recipe| %>
-                  <%= recipe.name %>
+                 <%= recipe.serving %> <%= recipe.name %>
                   <% end %>
                 </td>
                 <td class="text-uppercase"><% order.notes_orders.each do |note| %>
@@ -35,6 +36,19 @@
                   <% end %>
                 </td>
                 <td><%= order.delivery_time %></td>
+                <td class="smsstatus" data-id="<%= order.id %>"><% if order.sms_status == "Accepted" %>
+                <a class="btn btn-default" disabled="disabled">Accepted</a>
+                <%elsif order.sms_status == "Rejected" %>
+                <a class="btn btn-warning" disabled="disabled">Rejected</a>
+                <%else %>
+                <%= link_to "Accept", accept_sms_path(order), :method => :post, :class=>"smsmessage btn btn-success", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Decline', toggle_href: shop_open_path ,id: order.id } %>
+          
+          <%= link_to "Decline", reject_sms_path(order), :method => :post, :class=>"smsmessage btn btn-danger", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Accept', toggle_href: reject_sms_path , id: order.id }  %>
+              
+              
+              
+              <%end%>
+          </td>
                
                 </tr>
                 

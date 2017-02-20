@@ -67,6 +67,13 @@
           <%else%>
           <%= link_to "Open", shop_open_path, :method => :post, :class=>"addtocart btn btn-danger", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Close', toggle_href: shop_open_path , id: current_user.id }  %>
           <% end %>
+
+          <% if @stat.sms_accept %>
+         
+          <%= link_to "Manual Accept", sms_accept_path, :method => :post, :class=>"addtocart btn btn-success", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Automatic Accept', toggle_href: shop_open_path ,id: "sms#{current_user.id}" } %>
+          <%else%>
+          <%= link_to "Automatic Accept", sms_accept_path, :method => :post, :class=>"addtocart btn btn-danger", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Manual Accept', toggle_href: sms_accept_path , id: "sms#{current_user.id}" }  %>
+          <% end %>
         
             <div class="pull-right form-inline">
             <%= form_for(@stat, url: update_discount_path) do |f| %>
