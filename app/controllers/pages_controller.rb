@@ -6,7 +6,7 @@ class PagesController < ApplicationController
 		@shop_open = Stat.first.shop_open
 		if @shop_open
 			if current_user.non_veg
-			  @recipes = Recipe.all.where(availability: true)
+			  @recipes = Recipe.all.where(availability: true).sort_by(&:sku)
 			  if params[:format].present?
 			  	if params[:format] == "Indian"
 			  	  @recipes = @recipes.where(cusine: "Indian")
@@ -19,7 +19,7 @@ class PagesController < ApplicationController
 			    end
 			  end	
 			else
-				@recipes = Recipe.all.where(non_veg: false).where(availability: true)
+				@recipes = Recipe.all.where(non_veg: false).where(availability: true).sort_by(&:sku)
 			  #byebug
 			  if params[:format].present?
 			  	if params[:format] == "Indian"
@@ -38,7 +38,8 @@ class PagesController < ApplicationController
 		else
 			redirect_to closed_shop_path
 		end	 
-		@orders = Order.all 
+
+		@orders = Order.all.sort_by(&:created_at).reverse
 		@stat = Stat.first
 		@stat_second = Stat.new
 	end
@@ -72,7 +73,7 @@ class PagesController < ApplicationController
 		@stat = Stat.first
 		@stat.discount = params[:stat][:discount]
 		@stat.save
-		redirect_to root_path
+		redirect_to orders_path
 	end
 
 	def sms_accept

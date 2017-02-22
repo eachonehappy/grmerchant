@@ -8,7 +8,9 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    
+    @orders = Order.all.sort_by(&:created_at).reverse
+    @stat = Stat.first
     @stat_second = Stat.new
   end
 
