@@ -41,8 +41,8 @@
                 <%elsif order.sms_status == "Rejected" %>
                 <a class="btn btn-warning" disabled="disabled">Rejected</a>
                 <%else %>
-                <%= link_to "Accept", accept_sms_path(order), :method => :post, :class=>"smsmessage btn btn-success", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Decline', toggle_href: shop_open_path ,id: order.id } %>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal<%=order.id%>">Decline</button>
+                <%= link_to "Accept", accept_sms_path(order), :method => :post, :class=>"smsmessage btn btn-success", remote: true, :style=>"margin-top:5px;margin-left:5px;", data: { toggle_text: 'Decline', toggle_href: shop_open_path ,id: order.id } %>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal<%=order.id%>"  style="margin-top:5px;margin-left:5px;">Decline</button>
                 <div id="myModal<%=order.id%>" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -77,7 +77,7 @@
   </div>
 </div>
           
-        
+       
               
               
               
