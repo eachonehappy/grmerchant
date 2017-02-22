@@ -1,34 +1,34 @@
-<p id="notice" ><%= notice %></p>
+<p id="notice" style="margin-bottom: 0px;"><%= notice %></p>
 <% unless current_user.admin %>
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel" style="padding:0px;">
+        <div class="x_panel" style="padding:7px;">
      
           <div class="x_content">
           <center>
-          <div class="hidden-xs">
-             <%= link_to "Indian", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
+          <div class="hidden-xs" style="margin-bottom:5px;">
+             <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
       margin-right: 10px;"%>
-      <%= link_to "Chinese", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
+      <%= link_to "CHINESE", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
       margin-right: 10px;"%>
-      <%= link_to "Continental", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
+      <%= link_to "CONTINENTAL", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
       margin-right: 10px;"%>
-      <%= link_to "Italian", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
+      <%= link_to "ITALIAN", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
       margin-right: 10px;"%>
       </div>
-      <div class="visible-xs">
-        <%= link_to "Indian", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      <div class="visible-xs" style="margin-bottom:7px;">
+        <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
       margin-right: 2px;"%>
-      <%= link_to "Chinese", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      <%= link_to "CHINESE", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
       margin-right: 2px;"%>
-      <%= link_to "Continental", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      <%= link_to "CONTINENTAL", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
       margin-right: 2px;"%>
-      <%= link_to "Italian", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      <%= link_to "ITALIAN", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
       margin-right: 2px;"%>
       </div>
       </center>
-      <br>
-      <br>
+     
+      
           
             <table id="datatable" class="table table-striped table-bordered">
               <thead>
@@ -49,7 +49,7 @@
                   <td><%= recipe.serving %></td>
                   <td><%= recipe.price %></td>
 
-                  <td><%= link_to 'Add', add_to_cart_path(recipe), method: :put, :class=>"addtocart btn btn-success", remote: true, data: { toggle_href: add_to_cart_path(recipe, turbolinks: false), id: recipe.id } %></td>
+                  <td><%= link_to 'ADD', add_to_cart_path(recipe), method: :put, :class=>"addtocart btn btn-success", remote: true, data: { toggle_href: add_to_cart_path(recipe, turbolinks: false), id: recipe.id } %></td>
                
                 </tr>
                 <% end %>
