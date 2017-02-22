@@ -18,7 +18,7 @@ module ApplicationHelper
 	
  def last_merchant_pin
 
-	User.where(:admin => false).maximum(:merchant_pin).to_i + 1
+	(User.where(:admin => false).maximum(:merchant_pin).to_i + 1).to_s.rjust(3, '0')
 end
 
  def last_sku

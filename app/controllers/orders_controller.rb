@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = Order.all
+    @stat_second = Stat.new
   end
 
   # GET /orders/1
@@ -97,20 +98,20 @@ class OrdersController < ApplicationController
           if @order.save
             
            @order_recipes = @order.order_recipes
-            @message = ""
+            @message = "Your+Order+"
             @order_recipes.each do |order_recipe|
               @message = @message +"," + "#{order_recipe.recipe.serving}" + "#{order_recipe.recipe.name}"
             end
-            @order.message = @message
-            @order.save
-
+           
+           @message = @message.gsub ' ', '+'
             if @stat.sms_accept
             
-               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               @order.sms_status = "Accepted"
               @order.save
             else
-              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+             
+              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
             format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }
@@ -170,18 +171,17 @@ class OrdersController < ApplicationController
         respond_to do |format|
           if @order.save
             @order_recipes = @order.order_recipes
-            @message = ""
+            @message = "Your+Order+"
             @order_recipes.each do |order_recipe|
               @message = @message +"," + "#{order_recipe.recipe.serving}" + "#{order_recipe.recipe.name}"
             end
-            @order.message = @message
-            @order.save
+           @message = @message.gsub ' ', '+'
            if @stat.sms_accept
-              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               @order.sms_status = "Accepted"
               @order.save
             else
-              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
                format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }

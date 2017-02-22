@@ -40,6 +40,7 @@ class PagesController < ApplicationController
 		end	 
 		@orders = Order.all 
 		@stat = Stat.first
+		@stat_second = Stat.new
 	end
 
 	def cart
@@ -92,8 +93,16 @@ class PagesController < ApplicationController
 	def accept_sms
 		@order = Order.find(params[:format])
 		@customer = @order.customer
-		HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+Confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
-        @order.sms_status = "Accepted"   
+		@order_recipes = @order.order_recipes
+            @message = "Your+Order+"
+            @order_recipes.each do |order_recipe|
+              @message = @message +"," + "#{order_recipe.recipe.serving}" + "#{order_recipe.recipe.name}"
+            end
+           
+           @message = @message.gsub ' ', '+'
+		 HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+              
+		 @order.sms_status = "Accepted"   
         @order.save
         if request.xhr?
       render json: { count: "Accepted" ,id: @order.id }
@@ -103,17 +112,25 @@ class PagesController < ApplicationController
 	end
 
 	def reject_sms
-		@order = Order.find(params[:format])
+
+		@order = Order.find(params[:order_id])
 		@customer = @order.customer
 
-		HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=Hi+Your+order+is+Declined+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
-        @order.sms_status = "Rejected"   
+		@order_recipes = @order.order_recipes
+            @message = "+"
+            @order_recipes.each do |order_recipe|
+              @message = @message +"," + "#{order_recipe.recipe.serving}" + "#{order_recipe.recipe.name}"
+            end
+           
+           @message = @message.gsub ' ', '+'
+           @form_message = params[:stat][:discount].gsub ' ', '+'
+
+		 HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@form_message}+#{@message}+Total+Rs+#{@order.amount}+cannot+be+delivered+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+          @order.sms_status = "Rejected"   
         @order.save
-        if request.xhr?
-      render json: {count: "Rejected" , id: @order.id }
-    else
-      redirect_to request.referer_path
-    end
+     
+      redirect_to root_path
+    
 	end
 
 	def closed_shop

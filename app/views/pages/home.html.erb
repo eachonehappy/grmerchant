@@ -2,9 +2,11 @@
 <% unless current_user.admin %>
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
+        <div class="x_panel" style="padding:0px;">
      
           <div class="x_content">
+          <center>
+          <div class="hidden-xs">
              <%= link_to "Indian", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
       margin-right: 10px;"%>
       <%= link_to "Chinese", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
@@ -13,6 +15,18 @@
       margin-right: 10px;"%>
       <%= link_to "Italian", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
       margin-right: 10px;"%>
+      </div>
+      <div class="visible-xs">
+        <%= link_to "Indian", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      margin-right: 2px;"%>
+      <%= link_to "Chinese", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      margin-right: 2px;"%>
+      <%= link_to "Continental", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      margin-right: 2px;"%>
+      <%= link_to "Italian", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
+      margin-right: 2px;"%>
+      </div>
+      </center>
       <br>
       <br>
           
@@ -58,7 +72,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
      
-          <div class="x_content">
+          <div class="x_content" id="myDiv">
             <h1 class="pull-left">Orders</h1>
             
                   <% if @shop_open %>
