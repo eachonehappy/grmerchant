@@ -1,5 +1,6 @@
-<p id="notice" style="margin-bottom: 55px;"><%= notice %></p>
+
 <% unless current_user.admin || current_user.admin == nil %>
+<p id="notice" style="margin-bottom: 55px;"><%= notice %></p>
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel" style="padding:7px;">
@@ -77,6 +78,7 @@ function myFunction() {
 
 
 <%else%>
+<p id="notice" ><%= notice %></p>
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">

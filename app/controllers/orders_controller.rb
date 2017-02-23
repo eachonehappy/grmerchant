@@ -118,7 +118,7 @@ class OrdersController < ApplicationController
              
               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
-              ExampleMailer.sample_email.deliver
+            #  ExampleMailer.sample_email.deliver
             format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }
           else
@@ -190,7 +190,7 @@ class OrdersController < ApplicationController
             else
               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
-              ExampleMailer.sample_email.deliver
+             # ExampleMailer.sample_email.deliver
                format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }
           else
