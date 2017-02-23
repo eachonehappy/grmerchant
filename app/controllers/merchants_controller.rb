@@ -2,7 +2,7 @@ class MerchantsController < ApplicationController
   before_action :authenticate_user!
   before_action :admin_user? , only: [:index, :create, :update, :destroy]
 	def index
-		@users = User.all.where(:admin => false)
+		@users = User.all - User.where(:admin => true)
 		@user = User.new
 	end
 
