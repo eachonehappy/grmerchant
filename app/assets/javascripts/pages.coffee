@@ -27,3 +27,5 @@ $(document).on 'ajax:success', 'a.smsmessage', (status,data,xhr)->
     return
 
   return 
+  
+

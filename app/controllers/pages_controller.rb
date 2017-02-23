@@ -6,7 +6,7 @@ class PagesController < ApplicationController
 		@shop_open = Stat.first.shop_open
 		if @shop_open
 			if current_user.non_veg
-			  @recipes = Recipe.all.where(availability: true).sort_by(&:sku)
+			  @recipes = Recipe.all.where(availability: true)
 			  if params[:format].present?
 			  	if params[:format] == "Indian"
 			  	  @recipes = @recipes.where(cusine: "Indian")
@@ -19,7 +19,7 @@ class PagesController < ApplicationController
 			    end
 			  end	
 			else
-				@recipes = Recipe.all.where(non_veg: false).where(availability: true).sort_by(&:sku)
+				@recipes = Recipe.all.where(non_veg: false).where(availability: true)
 			  #byebug
 			  if params[:format].present?
 			  	if params[:format] == "Indian"

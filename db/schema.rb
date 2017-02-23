@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222081237) do
+ActiveRecord::Schema.define(version: 20170223081414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20170222081237) do
     t.string   "o_id"
     t.boolean  "preorder",            default: false
     t.string   "sms_status",          default: "default"
+    t.boolean  "is_delivered"
   end
 
   add_index "orders", ["customer_address_id"], name: "index_orders_on_customer_address_id", using: :btree

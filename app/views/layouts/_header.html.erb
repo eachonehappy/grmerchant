@@ -2,8 +2,8 @@
           <div class="nav_menu">
             <nav>
             
-              	<%= link_to root_path, :style=>"background-color:#dedede;", data: { turbolinks: false } do %>
-                <img src="/images/grgrgr.jpg" width="40px" style="padding-top:5px;margin-left:5px;">
+              	<%= link_to root_path, :style=>"background-color:#ededed;", data: { turbolinks: false } do %>
+                <img src="/images/GR-logo-new.png" width="50px" style="padding-top:5px;margin-left:5px;">
                 <%end%>
 
             <% if current_user.admin %>
@@ -31,15 +31,31 @@
 
          
               </ul>
+              <% elsif current_user.admin == nil%>
+               <ul class="nav navbar-nav navbar-right">
+              
+              
+                
+                
+                <li>
+                  <%= link_to 'Log Out'.html_safe, destroy_user_session_path,
+                        :method => :delete %>
+                </li>
+
+         
+              </ul>
+
             <% else %>
               <ul class="nav navbar-nav navbar-right">
               
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle text-uppercase" data-toggle="dropdown" aria-expanded="false">
-                   <%= current_user.full_name%>
+                <li>
+                  <a href="javascript:;"  class="btn-danger user-profile dropdown-toggle text-uppercase active" data-toggle="dropdown" aria-expanded="true" style="padding-top: 22px;padding-bottom: 9px;">
+                  <span class="h5" style="color:white;margin-right:5px;" >
+                   <%= current_user.full_name%></span>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
+                  <li><a><i class="fa fa-phone pull-right"></i> 0129-414-6687</a></li>
                     <li><%= link_to 'My Orders' , my_orders_path, data: { turbolinks: false } %></li>
                     
                     <li>
@@ -52,17 +68,42 @@
                   </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
-                <%= link_to cart_path , :class=> "dropdown-toggle info-number", data: { turbolinks: false } do %>
-                <span><b> CART  </b></span>
-                <i class="fa fa-shopping-cart"></i>
-                <span class="addtocart-count badge bg-green" data-id="<%= current_user.id %>"><%= current_user.cart_recipes.count %></span>
+                <li role="presentation" class="dropdown" >
+                <%= link_to cart_path , :class=> "nohover btn-success dropdown-toggle info-number",:style=> "padding-bottom:9px;padding-top: 8px;" ,data: { turbolinks: false } do %><b>
+                <span style="color:white;"> <span class="addtocart-count h1" data-id="<%= current_user.id %>"><%= current_user.cart_recipes.count %></span> ITEMS ADDED </b><i class="fa fa-shopping-cart"></i></span>
+                
                 <% end %>
                   
                  
                 </li>
               </ul>
               <% end %>
+
             </nav>
+
           </div>
+          <% if current_user.admin == false && params[:action] == "home" && params[:controller] == "pages" %>
+          <center>
+           <div class="hidden-xs" style="margin-bottom:5px;background-color:#ededed;">
+             <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 0px;
+      margin-right: 10px;"%>
+      <%= link_to "CHINESE", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 0px;
+      margin-right: 10px;"%>
+      <%= link_to "CONTINENTAL", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 0px;
+      margin-right: 10px;"%>
+      <%= link_to "ITALIAN", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 0px;
+      margin-right: 10px;"%>
+      </div>
+      <div class="visible-xs" style="margin-bottom:7px;">
+        <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;
+      margin-right: 2px;"%>
+      <%= link_to "CHINESE", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;
+      margin-right: 2px;"%>
+      <%= link_to "CONTINENTAL", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;
+      margin-right: 2px;"%>
+      <%= link_to "ITALIAN", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;
+      margin-right: 2px;"%>
+      </div>
+      </center>
+      <%end%>
         </div>                        

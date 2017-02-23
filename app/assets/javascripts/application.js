@@ -34,3 +34,16 @@ function phonenumber(inputtxt)
      return false;
   }
   }
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+    } );
+
+} );
+
+$('div.example_filter input').addClass('form-control');
+$('div.example_length select').addClass('form-control');
+

@@ -69,24 +69,28 @@ class RecipesController < ApplicationController
   def add_to_cart
 
     @recipe = Recipe.find(params[:format])
-    if @recipe.availability
-      @recipe.cart_recipes.build(user_id: current_user.id)
-      @recipe.save
-      if request.xhr?
-        @count = current_user.cart_recipes.count
-        render json: { count: @count , id: current_user.id }
+    if current_user.recipes.count < 5
+      if @recipe.availability
+        @recipe.cart_recipes.build(user_id: current_user.id)
+        @recipe.save
+        if request.xhr?
+          @count = current_user.cart_recipes.count
+          render json: { count: @count , id: current_user.id }
+        else
+          redirect_to request.referer_path
+        end
       else
-        redirect_to request.referer_path
+        redirect_to root_path , notice: 'This Recipe is not available for Now' 
       end
     else
-      redirect_to root_path , notice: 'This Recipe is not available for Now' 
-    end
+    redirect_to root_path, notice: 'More Than 5 Recipes cannot be added in Cart'
+    end 
   end
 
   def remove_cart_item
     @cart_recipe = current_user.cart_recipes.where(:recipe_id => params[:format])
     @cart_recipe.first.destroy
-    redirect_to cart_path, notice: 'Recipe was successfully destroyed.'
+    redirect_to cart_path
   end
 
   def availability

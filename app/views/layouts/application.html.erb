@@ -6,10 +6,10 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
  
-  <% if params[:action] == "home" && params[:controller] == "pages" && current_user.admin %>
+  <% if params[:action] == "home" && params[:controller] == "pages" && current_user.admin == nil%>
   <meta http-equiv="refresh" content="10" >
   <%end%>
-  <%= favicon_link_tag '/images/grgrgr.jpg' %>
+  <%= favicon_link_tag '/images/GR-logo-new.png' %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
@@ -42,6 +42,7 @@
     <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    
 
 <!-- Latest compiled and minified JavaScript -->
 

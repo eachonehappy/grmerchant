@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   post 'accept_sms' => "pages#accept_sms"
 
   post 'reject_sms' => "pages#reject_sms"
+
+  post 'order_delivery' => "orders#order_delivery"
   
   patch 'update_discount' => "pages#update_discount"
   devise_for :users, controllers: { sessions: 'users/sessions' ,:registrations => "users/registrations" }

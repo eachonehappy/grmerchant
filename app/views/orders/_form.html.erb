@@ -1,6 +1,9 @@
 <div class="x_panel">
 <center>
+          
+<%= link_to "<i class='fa fa-arrow-left fa-3x'></i>".html_safe , new_customer_path, data: { turbolinks: false },:class=> "pull-left"%>
   <h3>ORDER DETAILS</h3></center>
+  <br>
   <div class="x_content">
 
 <%= form_for(@order) do |f| %>
@@ -14,14 +17,14 @@
     <div class="field">
     <label for="fullname">Full Name :</label>
        
-      <%= l.text_field :name, :value => @customer.name, autofocus: true,:class=> "form-control text-uppercase" %>   
+      <%= l.text_field :name, :value => @customer.name, autofocus: true,:class=> "form-control text-uppercase", :placeholder=>"ENTER CUSTOMER'S NAME" %>   
     </div>
   <% end %>
 
   <%= f.fields_for :customer_address do |l| %>
     <div class="field">
        <label for="fullname">Customer Address :</label>
-      <%= l.text_area :address, autofocus: true,:value => @addresses.first.address, :id => "newaddress",:class=> "form-control" %>   
+      <%= l.text_area :address, autofocus: true,:value => @addresses.first.address, :id => "newaddress",:class=> "form-control" , :placeholder=>"ENTER CUSTOMER'S ADRESS"%>   
     </div>
     <div class="field">
     <label for="fullname">Select From Previous Addresses :</label>
@@ -38,14 +41,14 @@
     </div>
     <div class="field">
        <label for="fullname">Full Name :</label>
-      <%= l.text_field :name, autofocus: true,:class=> "form-control" %>   
+      <%= l.text_field :name, autofocus: true,:class=> "form-control", :placeholder=>"ENTER CUSTOMER'S NAME" %>   
     </div>
   <% end %>
 
   <%= f.fields_for :customer_address do |l| %>
     <div class="field">
        <label for="fullname">Customer Address :</label>
-      <%= l.text_area :address, autofocus: true,:class=> "form-control" %>   
+      <%= l.text_area :address, autofocus: true,:class=> "form-control", :placeholder=>"ENTER CUSTOMER'S ADRESS" %>   
     </div>
   <% end %>
 <% end %> 
@@ -56,37 +59,57 @@
       
       <div class="col-md-6 col-sm-3 col-xs-6">
         <label class="control control--radio">No Garlic
-          <input type="radio" name="n1" value="No Garlic" />
+          <input type="checkbox" name="n1" value="No Garlic" />
           <div class="control__indicator"></div>
         </label>   
         <label class="control control--radio">No Onion 
-          <input type="radio" name="n2" value="No Onion" />
+          <input type="checkbox" name="n2" value="No Onion" />
           <div class="control__indicator"></div>
         </label> 
       </div>  
       <div class="col-md-6 col-sm-3 col-xs-6">
         <label class="control control--radio">No Bread
-          <input type="radio" name="n3" value="No Bread" />
+          <input type="checkbox" name="n3" value="No Bread" />
           <div class="control__indicator"></div>
         </label>   
         <label class="control control--radio">No Ginger 
-          <input type="radio" name="n4" value="No Ginger" />
+          <input type="checkbox" name="n4" value="No Ginger" />
           <div class="control__indicator"></div>
         </label> 
       </div> 
     </div>
   <% end %>
-  <div class="field">  
+   
   <label for="fullname">Mode of Payment :</label>
-    <%= f.select :mode_of_payment, options_for_select([['Cash','Cash'],['Paytm','Paytm'],['Net Banking','Net Banking']]),{}, { :class => 'form-control', :style => "background-color: #ffffff;" } %>
+   
+     
+      <div class="field"> 
+      <div class="col-md-6 col-sm-3 col-xs-6">
+        <label class="control control--radio">Cash
+          <input type="radio" name="mode_of_payment" value="Cash" />
+          <div class="control__indicator"></div>
+        </label>   
+        
+      </div>  
+      <div class="col-md-6 col-sm-3 col-xs-6">
+        <label class="control control--radio">Online
+          <input type="radio" name="mode_of_payment" value="Online" />
+          <div class="control__indicator"></div>
+        </label>   
+         
+      </div> 
+   
   </div>
+  <a href="#demo" data-toggle="collapse" class="btn btn-info btn-block" style="margin-top: 45px;">AVAIL <%=@stat.discount %>% OFF ON PREORDER <i class="fa fa-arrow-down"></i></a>
+  <div id="demo" class="collapse">
 <%= render 'shared/preorder_form'%>
+</div>
 
     
 
 
   <div class="actions">
-    <%= f.submit "CONFIRM ORDER" ,:class=> "btn btn-success btn-block btn-lg" , data: { turbolinks: false }%>
+    <%= f.submit "PLACE ORDER" ,:class=> "btn btn-success btn-block btn-lg" , data: { turbolinks: false }%>
   </div>
   </form>
 <% end %>

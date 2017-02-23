@@ -11,6 +11,7 @@
                   <th>Ordered Recipes</th>
                   <th>Notes</th>
                   <th>Delivery Time</th>
+                  <th>Status</th>
                   
                   
                 </tr>
@@ -31,11 +32,23 @@
                  <%= recipe.serving %> <%= recipe.name %>
                   <% end %>
                 </td>
-                <td class="text-uppercase"><% order.notes_orders.each do |note| %>
+                <%if order.notes_orders.any?%>
+                <td class="text-uppercase" style="background-color:red;color:white;"><% order.notes_orders.each do |note| %>
                   <%= note.description %>
                   <% end %>
                 </td>
+                <%else%>
+                <td></td>
+                <%end%>
                 <td><%= order.delivery_time %></td>
+                <td> <% if order.is_delivered == nil %>
+                <%= link_to "NEW ORDER", order_delivery_path(order), :method => :post, :class=>"smsmessage btn btn-success", remote: true, :style=>"margin-top:5px;margin-left:5px;", data: { toggle_text: 'ORDER IN PROGRESS', toggle_href: order_delivery_path ,id: order.id } %>
+                <% elsif order.is_delivered == false %>
+                <%= link_to "ORDER IN PROGRESS", order_delivery_path(order), :method => :post, :class=>"smsmessage btn btn-warning", remote: true, :style=>"margin-top:5px;margin-left:5px;", data: { toggle_text: 'DELIVERED', toggle_href: order_delivery_path ,id: order.id } %>
+                <% elsif order.is_delivered == true %>
+                <a class="btn btn-default">DELIVERED</a>
+                  <%end%>
+                </td>
                
                
                 </tr>

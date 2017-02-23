@@ -12,9 +12,9 @@
               <thead>
                 <tr>
                   
-                  <th >Name</th>
-                  <th>Serving</th>
-                  <th>Price</th>
+                  <th >RECIPE KIT ITEM</th>
+                  <th>SERVINGS</th>
+                  <th>RATE</th>
                   
                   
                 </tr>
@@ -26,24 +26,13 @@
                 <tr>
 
                   <td class="text-uppercase"><%= recipe.name %></td>
-                  <td><%= recipe.serving %></td>
-                  <td><%= recipe.price %></td>
+                  <td ><span class="h4"><%= recipe.serving %> </span>Persons</td>
+                  <td>RS.<span class="h4"><%= recipe.price %></span></td>
                   
                
                 </tr>
                  <% end %>
-                <tr>
-                   <td>
-                   
-                	Total
-                	</td>
-                	<td><%=@order_recipes.map(&:serving).inject(0, :+)%></td>
-                	
-                	<td>
-                    <h4>
-                		Rs<%=@order_recipes.map(&:price).inject(0, :+)%></h4>
-                	</td>
-                </tr>
+               
                 <% if @order.preorder %>
                 <tr>
                    <td>
@@ -62,9 +51,21 @@
                 
               </tbody>
             </table>
+             <tr>
+                   <span class="h3">
+                   
+                  Total Items : 
+                  </span>
+                  <span class="h3"><%=@order_recipes.count%></span>
+                  
+                  <span class="pull-right">
+                   <span class="h4">
+                    Amount Paid : Rs.</span><span class="h3"><%=@order_recipes.map(&:price).inject(0, :+)%></span>
+                  </span>
+                </tr>
 
           </div>
-          <%= link_to 'BOOK MORE ORDERS', root_path, :class=>"btn btn-success pull-right btn-block btn-lg", data: { turbolinks: false } %>
+          <%= link_to '<i class="fa fa-refresh"></i> BACK TO HOME <i class="fa fa-refresh"></i>'.html_safe, root_path, :class=>"btn btn-success pull-right btn-block btn-lg", data: { turbolinks: false } %>
         </div>
       </div>
      

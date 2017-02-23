@@ -35,6 +35,7 @@ class OrdersController < ApplicationController
     else
       @customer = Customer.new
     end  
+    @stat = Stat.first
   end
 
   # GET /orders/1/edit
@@ -45,9 +46,10 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
 
-    if params[:order][:customer_address][:address].present? && params[:order][:customer][:name].present?
+    if params[:order][:customer_address][:address].present? && params[:order][:customer][:name].present? && params[:mode_of_payment].present?
       @stat = Stat.first
       @order = Order.new(order_params)
+
       @customer = Customer.find_by_phone(params[:order][:customer][:phone])
       if @customer
         @customer_address = CustomerAddress.find_by_address(params[:order][:customer_address][:address])
@@ -82,6 +84,7 @@ class OrdersController < ApplicationController
         if params[:n4].present?
           @order.notes_orders.build(:description => params[:n4]) 
         end
+        @order.mode_of_payment = params[:mode_of_payment]
         if params[:delivery_time].present?
           @order.delivery_time = params[:delivery_time]
           unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
@@ -94,7 +97,7 @@ class OrdersController < ApplicationController
           @order.amount = @cart_recipes.map(&:price).inject(0, :+)
           @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
         end
-        @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
+        @order.o_id = "#{current_user.merchant_pin}#{(Time.now).strftime('%d%m%Y')}#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
         
         respond_to do |format|
           if @order.save
@@ -115,6 +118,7 @@ class OrdersController < ApplicationController
              
               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
+              ExampleMailer.sample_email.deliver
             format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }
           else
@@ -157,6 +161,7 @@ class OrdersController < ApplicationController
         if params[:n4].present?
           @order.notes_orders.build(:description => params[:n4]) 
         end
+        @order.mode_of_payment = params[:mode_of_payment]
         if params[:delivery_time].present?
           @order.delivery_time = params[:delivery_time]
           unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
@@ -169,7 +174,7 @@ class OrdersController < ApplicationController
           @order.amount = @cart_recipes.map(&:price).inject(0, :+)
           @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
         end  
-        @order.o_id = "#{current_user.merchant_pin}/#{(Time.now).strftime('%d%m%Y')}/#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
+        @order.o_id = "#{current_user.merchant_pin}#{(Time.now).strftime('%d%m%Y')}#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
         respond_to do |format|
           if @order.save
             @order_recipes = @order.order_recipes
@@ -185,6 +190,7 @@ class OrdersController < ApplicationController
             else
               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
+              ExampleMailer.sample_email.deliver
                format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }
           else
@@ -194,7 +200,7 @@ class OrdersController < ApplicationController
         end
       end
     else
-      redirect_to new_new_order_path, notice: 'Please enter Name & Address.'
+      redirect_to new_new_order_path, notice: 'Please enter Name & Address & Mode of Payment'
     end  
   end
 
@@ -230,6 +236,23 @@ class OrdersController < ApplicationController
       @customer = Customer.new(phone: params[:customer][:phone])
       redirect_to new_order_path
     end
+  end
+
+  def order_delivery
+    @order = Order.find(params[:format])
+    
+    if @order.is_delivered == nil
+      @order.is_delivered = false
+    elsif @order.is_delivered == false
+      @order.is_delivered = true
+    end
+    @order.save
+  if request.xhr?
+      render json: { id: params[:format] }
+    else
+      redirect_to request.referer_path
+    end
+    
   end
 
   private

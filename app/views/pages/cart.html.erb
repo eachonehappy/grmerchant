@@ -8,14 +8,20 @@
      
           <div class="x_content">
           <center>
-            <h3>CART</h3></center>
+          <%= link_to "<i class='fa fa-arrow-left fa-3x'></i>".html_safe , root_path, data: { turbolinks: false },:class=> "pull-left"%>
+          
+<%= link_to "<i class='fa fa-arrow-right fa-3x'></i>".html_safe , new_customer_path, data: { turbolinks: false },:class=> "pull-right"%>
+          
+            <h3>CART</h3>
+            </center>
+            <br>
             <table id="table" class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th >Name</th>
-                  <th>Serving</th>
-                  <th>Price</th>
-                  <th>Action</th>
+                  <th >RECIPE KIT ITEMS</th>
+                  <th>SERVINGS</th>
+                  <th>RATE</th>
+                  <th>REMOVE</th>
                   
                 </tr>
               </thead>
@@ -25,31 +31,29 @@
               <% @cart_recipes.each do |recipe| %>
                 <tr>
                   <td class="text-uppercase"><%= recipe.name %></td>
-                  <td><%= recipe.serving %></td>
-                  <td><%= recipe.price %></td>
-                  <td><%= link_to 'X', remove_cart_item_path(recipe), method: :delete, data: { confirm: 'Are you sure?' } , :class=> "btn btn-danger", data: { turbolinks: false }%></td>
+                  <td ><span class="h4"><%= recipe.serving %> </span>Persons</td>
+                  <td>RS.<span class="h4"><%= recipe.price %></span></td>
+                  <td><%= link_to "X".html_safe, remove_cart_item_path(recipe), method: :delete, data: { confirm: 'Are you sure?' } , :class=> "btn btn-danger", data: { turbolinks: false }%></td>
                
                 </tr>
                  <% end %>
-                <tr>
-                   <td>
-                   
-                	Total
-                	</td>
-                	<td></td>
-                	<td></td>
-                	<td>
-                  <h3>
-                		Rs<%=current_user.recipes.map(&:price).inject(0, :+)%>
-                	</h3></td>
-                </tr>
+                
                
                 
               </tbody>
             </table>
+            <div class="pull-right">
+                   <span class="h4">
+                   
+                  TOTAL ORDER AMOUNT = <span class="h3">
+                    Rs. <%=current_user.recipes.map(&:price).inject(0, :+)%>
+                  </span>
+                  </span>
+                  
+                </div>
 
           </div>
-          <%= link_to 'CONFIRM', new_customer_path, :class=>"btn btn-success pull-right btn-block btn-lg", data: { turbolinks: false } %>
+          <%= link_to 'CONFIRM ORDER', new_customer_path, :class=>"btn btn-success pull-right btn-block btn-lg", data: { turbolinks: false } %>
         </div>
       </div>
      

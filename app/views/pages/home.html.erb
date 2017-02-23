@@ -1,42 +1,23 @@
-<p id="notice" style="margin-bottom: 0px;"><%= notice %></p>
-<% unless current_user.admin %>
+<p id="notice" style="margin-bottom: 55px;"><%= notice %></p>
+<% unless current_user.admin || current_user.admin == nil %>
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel" style="padding:7px;">
      
           <div class="x_content">
-          <center>
-          <div class="hidden-xs" style="margin-bottom:5px;">
-             <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
-      margin-right: 10px;"%>
-      <%= link_to "CHINESE", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
-      margin-right: 10px;"%>
-      <%= link_to "CONTINENTAL", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
-      margin-right: 10px;"%>
-      <%= link_to "ITALIAN", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success', :style=> "margin-top: 10px;
-      margin-right: 10px;"%>
-      </div>
-      <div class="visible-xs" style="margin-bottom:7px;">
-        <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
-      margin-right: 2px;"%>
-      <%= link_to "CHINESE", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
-      margin-right: 2px;"%>
-      <%= link_to "CONTINENTAL", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
-      margin-right: 2px;"%>
-      <%= link_to "ITALIAN", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 10px;
-      margin-right: 2px;"%>
-      </div>
-      </center>
+        
      
+   
       
           
-            <table id="datatable" class="table table-striped table-bordered">
+            <table id="example" class="table table-bordered">
+           
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Serving</th>
-                  <th>Price</th>
-                  <th>Action</th>
+                  <th>RECIPE KIT ITEMS</th>
+                  <th>SERVINGS</th>
+                  <th>RATE</th>
+                  <th>ADD ITEM</th>
                   
                 </tr>
               </thead>
@@ -45,29 +26,57 @@
               <tbody>
               <% @recipes.each do |recipe| %>
                 <tr>
-                  <td class="text-uppercase"><%= recipe.name %></td>
-                  <td><%= recipe.serving %></td>
-                  <td><%= recipe.price %></td>
 
-                  <td><%= link_to 'ADD', add_to_cart_path(recipe), method: :put, :class=>"addtocart btn btn-success", remote: true, data: { toggle_href: add_to_cart_path(recipe, turbolinks: false), id: recipe.id } %></td>
+                  <td class="text-uppercase"><%= recipe.name %> 
+                  <% if recipe.non_veg %>
+                  <a class="btn btn-danger pull-right" style="width: 19px;height: 19px;text-align: center;padding: 1px 0;font-size: 13px;line-height: 0.1;border-radius: 30px;margin-top: 15px;"></a>
+                  <% else %>
+                  <a class="btn btn-success pull-right" style="width: 19px;height: 19px;text-align: center;padding: 1px 0;font-size: 13px;line-height: 0.1;border-radius: 30px;margin-top: 15px;"></a>
+                  <% end %>
+                  </td>
+                  <td ><span class="h4"><%= recipe.serving %> </span>Persons</td>
+                  <td>RS.<span class="h4"><%= recipe.price %></span></td>
+
+                  <td><%= link_to "<span class='h2'>+</span>".html_safe, add_to_cart_path(recipe), method: :put, :class=>"addtocart btn btn-danger", remote: true, data: { toggle_href: add_to_cart_path(recipe, turbolinks: false), id: recipe.id } %></td>
                
                 </tr>
                 <% end %>
                 
               </tbody>
             </table>
+            <script type="text/javascript">
+              <script>
+function myFunction() {
+  // Declare variables 
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
+            </script>
           </div>
         </div>
       </div>
 
   </div>
 </div>
+
+
 <%else%>
-
-
-
-
-
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -86,3 +95,6 @@
 </div>
 
 <%end%>
+
+
+
