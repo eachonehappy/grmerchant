@@ -11,6 +11,7 @@ class OrdersController < ApplicationController
     
     @orders = Order.all.sort_by(&:created_at).reverse
     @stat = Stat.first
+    @shop_open = Stat.first.shop_open
     @stat_second = Stat.new
   end
 

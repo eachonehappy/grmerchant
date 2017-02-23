@@ -10,6 +10,7 @@
      
           <div class="x_content">
             <h1 class="pull-left">Orders</h1>
+          
                               <% if @shop_open %>
          
           <%= link_to "Close", shop_open_path, :method => :post, :class=>"addtocart btn btn-success", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Open', toggle_href: shop_open_path ,id: current_user.id } %>
