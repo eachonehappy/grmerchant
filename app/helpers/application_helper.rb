@@ -18,7 +18,7 @@ module ApplicationHelper
 	
  def last_merchant_pin
 
-	(User.all.count.to_i + 1).to_s.rjust(3, '0')
+	(User.where(role: "merchant").count.to_i + 1).to_s.rjust(3, '0')
 end
 
  def last_sku
