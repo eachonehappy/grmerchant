@@ -32,7 +32,7 @@
                   <td class="text-uppercase"><%= user.role %></td>
                   <td class="text-uppercase"><%= user.address %></td>
                   <td><%= user.phone %></td>
-                  <td><%= link_to 'Edit', edit_merchant_path(user), :class=> "btn btn-primary", data: { turbolinks: false } %></td>
+                  <td><%= link_to 'Edit', edit_merchant_path(user), :class=> "btn btn-primary", data: { turbolinks: false } %><%= link_to 'Destroy', delete_merchant_path(user), method: :delete, data: { confirm: 'Are you sure?' } ,:class=> "btn btn-danger"%></td>
                
                 </tr>
                 <% end %>

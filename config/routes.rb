@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   put 'add_to_cart' => 'recipes#add_to_cart'
 
   delete 'remove_cart_item' => 'recipes#remove_cart_item'
+  delete 'delete_merchant' => 'merchants#destroy'
 
   post 'auto_complete' => 'orders#autocomplete'
 

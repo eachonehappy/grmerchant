@@ -47,11 +47,11 @@ class MerchantsController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @user = User.find(params[:format])
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'Merchant was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  
+      redirect_to merchants_path, notice: 'Merchant was successfully destroyed.' 
+     
   end
 
   private
