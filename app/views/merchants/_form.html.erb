@@ -44,7 +44,7 @@
     <%= f.label :role %><br />
     <%= f.select :role, options_for_select([['MERCHANT','merchant'],['MANAGER','manager'],['OPERATOR','operator'],['DATA ENTRY','data_entry'],['MARKETING','marketing']]),
       {}, :class=> "form-control"%>
-  </div>marketing
+  </div>
 
   <div class="actions">
     <%= f.submit "Create Merchant" ,:class=>"btn btn-success btn-block btn-lg", data: { turbolinks: false } %>
