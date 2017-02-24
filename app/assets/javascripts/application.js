@@ -39,16 +39,18 @@ $(document).ready(function() {
     $('#datatable').DataTable( {
         "paging":   false,
         "ordering": true,
-        "info":     false
+        "info":     false,
+        "order": [[ 0, "desc" ]]
     } );
 
 } );
 
 $(document).ready(function() {
     $('#example').DataTable( {
-        "paging":   false,
-        "ordering": false,
-        "info":     false
+        "paging":   true,
+        "ordering": true,
+        "info":     false,
+        "order": [[ 0, "desc" ]]
     } );
 
 } );

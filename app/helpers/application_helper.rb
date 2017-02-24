@@ -44,4 +44,8 @@ def admin
   def merchant
     current_user.role == "merchant"
   end
+
+  def marketing
+    current_user.role == "marketing"
+  end
 end

@@ -5,10 +5,11 @@ class OrdersController < ApplicationController
   before_action :admin? , only: [:destroy]
   before_action :shop_opened , only: [:new]
 
+
   # GET /orders
   # GET /orders.json
   def index
-
+  
     @orders = Order.all.sort_by(&:created_at).reverse
     @stat = Stat.first
     @shop_open = Stat.first.shop_open
@@ -52,7 +53,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-
+   @stat_message = Stat.first.pin.gsub ' ', '+'
     if params[:order][:customer_address][:address].present? && params[:order][:customer][:name].present? && params[:mode_of_payment].present?
       @stat = Stat.first
       @order = Order.new(order_params)
@@ -94,7 +95,6 @@ class OrdersController < ApplicationController
         @order.mode_of_payment = params[:mode_of_payment]
         if params[:delivery_time].present?
           @order.delivery_time = params[:delivery_time]
-          params[:delivery_time].split("/")[1].split("-")[0][0..1] > Time.now.strftime('%H')
            
           
           unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
@@ -129,14 +129,15 @@ class OrdersController < ApplicationController
             end
            
            @message = @message.gsub ' ', '+'
+
             if @stat.sms_accept
             
-               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
               @order.sms_status = "Accepted"
               @order.save
             else
              
-              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
             #  ExampleMailer.sample_email.deliver
             format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
@@ -213,11 +214,11 @@ class OrdersController < ApplicationController
             end
            @message = @message.gsub ' ', '+'
            if @stat.sms_accept
-              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
               @order.sms_status = "Accepted"
               @order.save
             else
-              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+              HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
              # ExampleMailer.sample_email.deliver
                format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }

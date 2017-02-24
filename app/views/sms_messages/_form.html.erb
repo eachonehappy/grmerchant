@@ -1,0 +1,28 @@
+<div class="x_panel">
+  <div class="x_content">
+  <center>
+  <h1>Add Message</h1>
+  </center>
+<%= form_for(@sms_message) do |f| %>
+  <% if @sms_message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@@sms_message.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+      <ul>
+      <% @sms_message.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :Sms_Message %><br />
+    <%= f.text_area :sms_message, autofocus: true , :class=> "form-control" %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Submit",:class=>"btn btn-success btn-block btn-lg" , data: { turbolinks: false }%>
+  </div>
+<% end %>
+</div>
+</div>

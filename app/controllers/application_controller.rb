@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless current_user.role == "merchant"
   end
 
+  def marketing?
+    redirect_to root_path unless current_user.role == "marketing"
+  end
+
   
 
   def shop_opened

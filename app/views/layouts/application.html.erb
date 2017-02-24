@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <% if user_signed_in? %>
- <% if manager || operator %>
+ <% if manager || operator || admin %>
   <% if params[:action] == "home" && params[:controller] == "pages"%>
   <meta http-equiv="refresh" content="10" >
   <%end%>

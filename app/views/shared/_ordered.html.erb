@@ -1,13 +1,11 @@
-<table id="example" class="table table-bordered">
+<table id="datatable" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Order ID</th>
                  <th>Customer Name</th>
                   <th>Phone</th>
                   <th>Address</th>
-                  <th>Date</th>
                   <th>Amount</th>
-                  <th>Mode of Payment</th>
                   <th>Ordered Recipes</th>
                   <th>Notes</th>
                   <th>Delivery Time</th>
@@ -25,11 +23,10 @@
                   <td class="text-uppercase"><%= order.customer.name %></td>
                 <td class="text-uppercase"><%= order.customer.phone %></td>
                 <td class="text-uppercase"><%= order.customer_address.address %></td>
-                <td><%= order.created_at.strftime('%d%m%Y / %T')%></td>
                 <td><%= order.amount %></td>
-                <td class="text-uppercase"><%= order.mode_of_payment %></td>
-                <td class="text-uppercase"><% order.recipes.each do |recipe| %>
-                 <%= recipe.serving %> <%= recipe.name %>
+               
+                <td class="text-uppercase h4"><% order.recipes.each do |recipe| %>
+                 <%= recipe.serving %><span class="h5">S </span><%= recipe.name %>,
                   <% end %>
                 </td>
                 <%if order.notes_orders.any?%>
@@ -40,7 +37,7 @@
                 <%else%>
                 <td></td>
                 <%end%>
-                <td><%= order.delivery_time %></td>
+                <td class="h3" style="color:blue;"><%= order.delivery_time %></td>
                 <td><% if order.sms_status == "default" %> 
                 <a class="btn btn-info">UNDER REVIEW</a>
                

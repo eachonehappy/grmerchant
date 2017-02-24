@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  resources :orders
-  resources :recipes
-  resources :merchants
-  resources :customers
+
   root to: 'pages#home'
 
   resources :recipes do
@@ -10,7 +7,11 @@ Rails.application.routes.draw do
       post :import
     end
   end
-
+  resources :orders
+  resources :recipes
+  resources :merchants
+  resources :customers
+  resources :sms_messages
   get 'cart'=> 'pages#cart'
 
   put 'add_to_cart' => 'recipes#add_to_cart'
@@ -45,6 +46,7 @@ Rails.application.routes.draw do
   patch 'recipes' => "recipes#index"
   patch 'orders' => "orders#index"
   patch 'merchants' => "merchants#index"
+  post 'set_sms' => "sms_messages#set_sms"
   devise_for :users, controllers: { sessions: 'users/sessions' ,:registrations => "users/registrations" }
 
 

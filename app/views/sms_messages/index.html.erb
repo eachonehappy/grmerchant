@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'form' %>
+
+
+<div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+     
+          <div class="x_content">
+            <h1 class="pull-left">Messages</h1>
+    
+            <table id="datatable" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Serial No.</th>
+                  <th>Messages</th>
+                 <th>Set</th>
+                  <th>Action</th>
+                  
+                  
+                </tr>
+              </thead>
+
+
+              <tbody>
+              <% @sms_messages.each do |message| %>
+                <tr>
+                <td class="text-uppercase"><%= message.id %></td>
+                <td class="text-uppercase"><%= message.sms_message %></td>
+                <td><% if @stat_message == message.sms_message %>
+                <a class="btn btn-default">ACTIVE</a>
+                  <%else%>
+                  <%= link_to 'INACTIVE', set_sms_path(message),method: :post,:class=> "btn btn-success" %>
+                  <%end%>
+                </td>
+                <td><%= link_to 'Edit', edit_sms_message_path(message),:class=> "btn btn-info", data: { turbolinks: false } %><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } ,:class=> "btn btn-danger", data: { turbolinks: false }%></td>
+                
+                
+               
+                </tr>
+                <% end %>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+
+

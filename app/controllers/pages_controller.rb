@@ -1,10 +1,12 @@
 class PagesController < ApplicationController
 	before_action :authenticate_user!
 	before_action :shop_opened , only: [:cart]
-
-	def home
+	before_action :admin? , only: [:update_discount]
+  def home
 		if current_user.role == "data_entry"
 			redirect_to recipes_path
+		elsif current_user.role == "marketing"
+			redirect_to sms_messages_path	
 		else	
 		@shop_open = Stat.first.shop_open
 		if @shop_open
@@ -109,7 +111,7 @@ class PagesController < ApplicationController
 
 	def accept_sms
 		@order = Order.find(params[:format])
-
+    @stat_message = Stat.first.pin.gsub ' ', '+'
 		@customer = @order.customer
 		@order_recipes = @order.order_recipes
             @message = "Your+Order+"
@@ -118,7 +120,7 @@ class PagesController < ApplicationController
             end
            
            @message = @message.gsub ' ', '+'
-		 HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+		 HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
               
 		 @order.sms_status = "Accepted" 
 		 if @order.is_delivered == nil
@@ -134,7 +136,7 @@ class PagesController < ApplicationController
 	end
 
 	def reject_sms
-
+        @stat_message = Stat.first.pin.gsub ' ', '+'
 		@order = Order.find(params[:order_id])
 		@customer = @order.customer
 
@@ -147,11 +149,11 @@ class PagesController < ApplicationController
            @message = @message.gsub ' ', '+'
            @form_message = params[:stat][:discount].gsub ' ', '+'
 
-		 HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@form_message}+#{@message}+Total+Rs+#{@order.amount}+cannot+be+delivered+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
+		 HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@form_message}+#{@message}+Total+Rs+#{@order.amount}+cannot+be+delivered+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
           @order.sms_status = "Rejected"   
         @order.save
      
-      redirect_to root_path
+      redirect_to request.referer_path
     
 	end
 

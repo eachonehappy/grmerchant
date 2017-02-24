@@ -11,6 +11,11 @@
                 :method => :delete ,:class=>"user-profile dropdown-toggle"%>
         </li>
         <% end %>
+        <% if admin || marketing %>
+        <li>
+          <%= link_to 'SMS' , sms_messages_path , data: { turbolinks: false },:class=>"user-profile dropdown-toggle" %>
+        </li>
+        <% end %>
         <% if admin || manager %>
         <li>
           <%= link_to 'ORDERS' , orders_path , data: { turbolinks: false },:class=>"user-profile dropdown-toggle" %>
@@ -75,14 +80,14 @@
       margin-right: 10px;"%>
         </div>
         <div class="visible-xs" style="margin-bottom:7px;background-color:#ededed;">
-          <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;margin-right: 0px;"%>
+          <%= link_to "INDIAN", cusine_path("Indian"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;margin-right: 0px;padding-left:8px;padding-right:8px;"%>
           <%= link_to "CHINESE", cusine_path("Chinese"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;
       margin-right: 0px;"%>
-      <%= link_to "ALL", cusine_path("All"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;margin-right: 0px;"%>
+      <%= link_to "ALL", cusine_path("All"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;margin-right: 0px;padding-left:8px;padding-right:8px;"%>
           <%= link_to "CONTINENTAL", cusine_path("Continental"),method: :post, data: { turbolinks: false, disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;
-      margin-right: 0px;"%>
+      margin-right: 0px;padding-left:8px;padding-right:8px;"%>
           <%= link_to "ITALIAN", cusine_path("Italian"),method: :post, data: { turbolinks: false,disable_with: 'Wait ...' }, class: 'btn btn-success btn-sm', :style=> "margin-top: 0px;
-      margin-right: 0px;"%>
+      margin-right: 0px;padding-left:8px;padding-right:8px;"%>
         </div>
       </center>
     <%end%>
