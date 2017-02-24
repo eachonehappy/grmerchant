@@ -1,6 +1,6 @@
 class MerchantsController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin? , only: [:index, :create, :update, :destroy]
+  before_action :admin? , only: [ :destroy]
 
   def index
 	

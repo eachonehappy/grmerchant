@@ -3,6 +3,7 @@
                 <tr>
                   <th>Order ID</th>
                  <th>Customer Name</th>
+                 <th>Merchant Name</th>
                   <th>Phone</th>
                   <th>Address</th>
                   <th>Amount</th>
@@ -21,6 +22,7 @@
                 <tr>
                 <td class="text-uppercase"><%= order.o_id %></td>
                   <td class="text-uppercase"><%= order.customer.name %></td>
+                  <td class="text-uppercase"><%= order.user.full_name %></td>
                 <td class="text-uppercase"><%= order.customer.phone %></td>
                 <td class="text-uppercase"><%= order.customer_address.address %></td>
                 <td><%= order.amount %></td>

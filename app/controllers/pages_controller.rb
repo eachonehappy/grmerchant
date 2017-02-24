@@ -6,7 +6,7 @@ class PagesController < ApplicationController
 		if current_user.role == "data_entry"
 			redirect_to recipes_path
 		elsif current_user.role == "marketing"
-			redirect_to sms_messages_path	
+			redirect_to merchants_path	
 		else	
 		@shop_open = Stat.first.shop_open
 		if @shop_open
