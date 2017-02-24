@@ -40,11 +40,19 @@
     <%= f.select :non_veg, options_for_select([['ALL','true'],['VEG','false']]),
       {}, :class=> "form-control"%>
   </div>
+  <% if admin %>
   <div class="field">
     <%= f.label :role %><br />
     <%= f.select :role, options_for_select([['MERCHANT','merchant'],['MANAGER','manager'],['OPERATOR','operator'],['DATA ENTRY','data_entry'],['MARKETING','marketing']]),
       {}, :class=> "form-control"%>
   </div>
+  <% else %>
+  <div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, options_for_select([['MERCHANT','merchant']]),
+      {}, :class=> "form-control"%>
+  </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Create Merchant" ,:class=>"btn btn-success btn-block btn-lg", data: { turbolinks: false } %>
