@@ -5,9 +5,12 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
- 
-  <% if params[:action] == "home" && params[:controller] == "pages" && current_user.admin == nil%>
+  <% if user_signed_in? %>
+ <% if manager || operator %>
+  <% if params[:action] == "home" && params[:controller] == "pages"%>
   <meta http-equiv="refresh" content="10" >
+  <%end%>
+  <%end%>
   <%end%>
   <%= favicon_link_tag '/images/GR-logo-new.png' %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,6 +18,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 
   <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->

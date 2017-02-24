@@ -20,11 +20,11 @@
 
           <% if @stat.sms_accept %>
          
-          <%= link_to "Manual Accept", sms_accept_path, :method => :post, :class=>"addtocart btn btn-success", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Automatic Accept', toggle_href: shop_open_path ,id: "sms#{current_user.id}" } %>
+          <%= link_to "Automatic Accept", sms_accept_path, :method => :post, :class=>"addtocart btn btn-success", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Manual Accept', toggle_href: shop_open_path ,id: "sms#{current_user.id}" } %>
           <%else%>
-          <%= link_to "Automatic Accept", sms_accept_path, :method => :post, :class=>"addtocart btn btn-danger", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Manual Accept', toggle_href: sms_accept_path , id: "sms#{current_user.id}" }  %>
+          <%= link_to "Manual Accept", sms_accept_path, :method => :post, :class=>"addtocart btn btn-danger", remote: true, :style=>"margin-top:15px;margin-left:20px;", data: { toggle_text: 'Automatic Accept', toggle_href: sms_accept_path , id: "sms#{current_user.id}" }  %>
           <% end %>
-        
+        <% if admin %>
             <div class="pull-right form-inline">
             <%= form_for(@stat, url: update_discount_path) do |f| %>
             <!-- start form for validation -->
@@ -37,12 +37,17 @@
 
             
              <%= f.submit "Update",:class=>"btn btn-success submit", :style=>"margin-top:5px" %>
+
+
                   
 
             </form>
             <% end %>
+         
         
             </div>
+            <%end%>
+
             <%= render 'shared/order' %>
           </div>
         </div>

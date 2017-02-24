@@ -1,9 +1,12 @@
 class MerchantsController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin_user? , only: [:index, :create, :update, :destroy]
-	def index
-		@users = User.all - User.where(:admin => true)
-		@user = User.new
+  before_action :admin? , only: [:index, :create, :update, :destroy]
+
+  def index
+	
+    @users = User.all - User.where(:role => "admin")
+    @user = User.new
+  
 	end
 
 	def create
@@ -15,7 +18,7 @@ class MerchantsController < ApplicationController
         format.html { redirect_to merchants_path, notice: 'Merchant was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        @users = User.all.where(:admin => false)
+        @users = User.all - User.where(:role => "admin")
         format.html { render :index }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -59,6 +62,6 @@ class MerchantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:merchant_pin, :password, :password_confirmation, :full_name, :address, :phone, :non_veg)
+      params.require(:user).permit(:merchant_pin, :password, :password_confirmation, :full_name, :address, :phone, :non_veg, :role)
     end
 end

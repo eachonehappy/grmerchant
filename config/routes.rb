@@ -40,6 +40,11 @@ Rails.application.routes.draw do
   post 'order_delivery' => "orders#order_delivery"
   
   patch 'update_discount' => "pages#update_discount"
+  patch 'update_pin' => "pages#update_pin"
+
+  patch 'recipes' => "recipes#index"
+  patch 'orders' => "orders#index"
+  patch 'merchants' => "merchants#index"
   devise_for :users, controllers: { sessions: 'users/sessions' ,:registrations => "users/registrations" }
 
 

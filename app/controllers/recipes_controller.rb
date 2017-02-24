@@ -1,13 +1,14 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :admin_user? , only: [:index, :new, :create, :update, :destroy]
+
   before_action :shop_opened , only: [:add_to_cart]
+  
   # GET /recipes
   # GET /recipes.json
   def index
     @recipes = Recipe.all
-    @recipe = Recipe.new
+    @recipe = Recipe.new    
   end
 
   # GET /recipes/1

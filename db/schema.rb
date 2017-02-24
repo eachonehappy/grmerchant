@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223081414) do
+ActiveRecord::Schema.define(version: 20170223183709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,26 +108,27 @@ ActiveRecord::Schema.define(version: 20170223081414) do
     t.datetime "updated_at",                 null: false
     t.string   "discount"
     t.boolean  "sms_accept", default: false
+    t.string   "pin"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "merchant_pin",           default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "merchant_pin",           default: "",         null: false
+    t.string   "encrypted_password",     default: "",         null: false
     t.string   "full_name"
     t.text     "address"
     t.boolean  "non_veg",                default: true
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,     null: false
+    t.integer  "sign_in_count",          default: 0,          null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.boolean  "admin",                  default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.text     "phone"
+    t.string   "role",                   default: "merchant"
   end
 
   add_index "users", ["merchant_pin"], name: "index_users_on_merchant_pin", unique: true, using: :btree

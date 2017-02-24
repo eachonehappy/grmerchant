@@ -33,24 +33,27 @@
                 </tr>
                  <% end %>
                
-                <% if @order.preorder %>
-                <tr>
-                   <td>
-                   
-                  After Preorder Discount
-                  </td>
-                  <td>Pre Order Discount : <%=@stat.discount %> %</td>
-                  
-                  <td>
-                   <h3>
-                    Rs<%=@order.amount%>
-                    </h3>
-                  </td>
-                </tr>
-               <%end%>
+               
                 
               </tbody>
             </table>
+             <% if @order.preorder %>
+                <tr>
+                   
+                   <span class="h3">
+                  </span>
+                
+                  <span class="h4"> Pre Order Discount : <%=@stat.discount %> %</span>
+                  
+                  
+                  <div class="pull-right">
+                   <span class="h4">Total Amount :
+                    Rs<%=@order.recipes.map(&:price).inject(0, :+)%>
+                    </span> 
+                  </div>
+                </tr>
+               <%end%>
+               <br>
              <tr>
                    <span class="h3">
                    
@@ -59,8 +62,8 @@
                   <span class="h3"><%=@order_recipes.count%></span>
                   
                   <span class="pull-right">
-                   <span class="h4">
-                    Amount Paid : Rs.</span><span class="h3"><%=@order_recipes.map(&:price).inject(0, :+)%></span>
+                   <span class="h3">
+                    Amount Paid : Rs.</span><span class="h3"><%=@order.amount%></span>
                   </span>
                 </tr>
 

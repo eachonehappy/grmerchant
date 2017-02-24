@@ -25,4 +25,23 @@ end
 
 	Recipe.maximum(:sku).to_i + 1
 end
+def admin
+    current_user.role == "admin"
+  end
+
+  def manager
+    current_user.role == "manager"
+  end
+
+  def operator
+    current_user.role == "operator"
+  end
+
+  def data_entry
+    current_user.role == "data_entry"
+  end
+
+  def merchant
+    current_user.role == "merchant"
+  end
 end

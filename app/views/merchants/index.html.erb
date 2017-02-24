@@ -15,6 +15,7 @@
                 <tr>
                   <th>Merchant ID</th>
                   <th>Name</th>
+                  <th>Role</th>
                   <th>Address</th>
                   <th>Phone</th>
                   <th>Action</th>
@@ -28,6 +29,7 @@
                 <tr>
                   <td ><%= user.merchant_pin %></td>
                   <td class="text-uppercase"><%= user.full_name %></td>
+                  <td class="text-uppercase"><%= user.role %></td>
                   <td class="text-uppercase"><%= user.address %></td>
                   <td><%= user.phone %></td>
                   <td><%= link_to 'Edit', edit_merchant_path(user), :class=> "btn btn-primary", data: { turbolinks: false } %></td>

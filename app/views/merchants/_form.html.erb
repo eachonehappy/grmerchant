@@ -37,7 +37,12 @@
   </div>
   <div class="field">
     <%= f.label :Veg_NonVeg %><br />
-    <%= f.select :non_veg, options_for_select([['All','true'],['Veg','false']]),
+    <%= f.select :non_veg, options_for_select([['ALL','true'],['VEG','false']]),
+      {}, :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, options_for_select([['MERCHANT','merchant'],['MANAGER','manager'],['OPERATOR','operator'],['DATA ENTRY','data_entry']]),
       {}, :class=> "form-control"%>
   </div>
 

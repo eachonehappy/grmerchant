@@ -1,4 +1,4 @@
-<table id="datatable" class="table table-striped table-bordered">
+<table id="datatable" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Order ID</th>
@@ -31,10 +31,14 @@
                  <%= recipe.serving %> <%= recipe.name %>
                   <% end %>
                 </td>
-                <td class="text-uppercase"><% order.notes_orders.each do |note| %>
+                <%if order.notes_orders.any?%>
+                <td class="text-uppercase" style="background-color:red;color:white;"><% order.notes_orders.each do |note| %>
                   <%= note.description %>
                   <% end %>
                 </td>
+                <%else%>
+                <td></td>
+                <%end%>
                 <td><%= order.delivery_time %></td>
                 <td class="smsstatus" data-id="<%= order.id %>"><% if order.sms_status == "Accepted" %>
                 <a class="btn btn-default" disabled="disabled">Accepted</a>

@@ -3,6 +3,9 @@ class PagesController < ApplicationController
 	before_action :shop_opened , only: [:cart]
 
 	def home
+		if current_user.role == "data_entry"
+			redirect_to recipes_path
+		else	
 		@shop_open = Stat.first.shop_open
 		if @shop_open
 			if current_user.non_veg
@@ -16,11 +19,13 @@ class PagesController < ApplicationController
 		    	  @recipes = @recipes.where(cusine: "Continental")
 			    elsif params[:format] == "Italian"
 			    	@recipes = @recipes.where(cusine: "Italian")
+			    elsif params[:format] == "All"
+			    	@recipes = @recipes	
 			    end
 			  end	
 			else
 				@recipes = Recipe.all.where(non_veg: false).where(availability: true)
-			  #byebug
+		
 			  if params[:format].present?
 			  	if params[:format] == "Indian"
 			  	  @recipes = @recipes.where(cusine: "Indian")
@@ -29,12 +34,14 @@ class PagesController < ApplicationController
 			   elsif params[:format] == "Continental"
 		    	  @recipes = @recipes.where(cusine: "Continental")
 			    elsif params[:format] == "Italian"
-			    	@recipes = @recipes.where(cusine: "Italian") 	
+			    	@recipes = @recipes.where(cusine: "Italian") 
+			    elsif params[:format] == "All"
+			    	@recipes = @recipes		
 			    end
 			  end
 			end
 			
-		elsif current_user.admin
+		elsif current_user.role == "data_entry" || current_user.role == "manager" || current_user.role == "operator" || current_user.role == "admin"
 		else
 			redirect_to closed_shop_path
 		end	 
@@ -42,6 +49,7 @@ class PagesController < ApplicationController
 		@orders = Order.all.sort_by(&:created_at).reverse
 		@stat = Stat.first
 		@stat_second = Stat.new
+	end
 	end
 
 	def cart
@@ -76,6 +84,14 @@ class PagesController < ApplicationController
 		redirect_to orders_path
 	end
 
+	def update_pin
+		
+		@stat = Stat.first
+		@stat.pin = params[:stat][:pin]
+		@stat.save
+		redirect_to orders_path
+	end
+
 	def sms_accept
 		@stat = Stat.first
 		@stat.toggle(:sms_accept)
@@ -93,6 +109,7 @@ class PagesController < ApplicationController
 
 	def accept_sms
 		@order = Order.find(params[:format])
+
 		@customer = @order.customer
 		@order_recipes = @order.order_recipes
             @message = "Your+Order+"
@@ -103,8 +120,12 @@ class PagesController < ApplicationController
            @message = @message.gsub ' ', '+'
 		 HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+confirmed+%3A+%0A+Today+is+20-02-2017+12%3A55%3A23&numbers=#{@customer.phone}&unicode=false&flash=true")
               
-		 @order.sms_status = "Accepted"   
+		 @order.sms_status = "Accepted" 
+		 if @order.is_delivered == nil
+		      @order.is_delivered = false
+		  end  
         @order.save
+
         if request.xhr?
       render json: { count: "Accepted" ,id: @order.id }
     else

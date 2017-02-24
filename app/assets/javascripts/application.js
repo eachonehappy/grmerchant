@@ -36,6 +36,15 @@ function phonenumber(inputtxt)
   }
 
 $(document).ready(function() {
+    $('#datatable').DataTable( {
+        "paging":   false,
+        "ordering": true,
+        "info":     false
+    } );
+
+} );
+
+$(document).ready(function() {
     $('#example').DataTable( {
         "paging":   false,
         "ordering": false,
@@ -43,7 +52,4 @@ $(document).ready(function() {
     } );
 
 } );
-
-$('div.example_filter input').addClass('form-control');
-$('div.example_length select').addClass('form-control');
 

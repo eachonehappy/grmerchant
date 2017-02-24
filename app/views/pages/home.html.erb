@@ -1,5 +1,5 @@
 
-<% unless current_user.admin || current_user.admin == nil %>
+<% if merchant %>
 <p id="notice" style="margin-bottom: 55px;"><%= notice %></p>
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -11,7 +11,7 @@
    
       
           
-            <table id="example" class="table table-bordered">
+            <table id="datatable" class="table table-bordered">
            
               <thead>
                 <tr>
@@ -45,29 +45,7 @@
                 
               </tbody>
             </table>
-            <script type="text/javascript">
-              <script>
-function myFunction() {
-  // Declare variables 
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    } 
-  }
-}
-</script>
+            
             </script>
           </div>
         </div>
@@ -75,9 +53,9 @@ function myFunction() {
 
   </div>
 </div>
+<%end%>
 
-
-<%else%>
+<% if manager || admin || operator %>
 <p id="notice" ><%= notice %></p>
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">

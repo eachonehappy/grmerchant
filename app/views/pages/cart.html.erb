@@ -42,10 +42,15 @@
                 
               </tbody>
             </table>
+             <span class="h3">
+                   
+                  Total Items : 
+                  </span>
+                  <span class="h3"><%=@cart_recipes.count%></span>
             <div class="pull-right">
                    <span class="h4">
                    
-                  TOTAL ORDER AMOUNT = <span class="h3">
+                  TOTAL AMOUNT = <span class="h3">
                     Rs. <%=current_user.recipes.map(&:price).inject(0, :+)%>
                   </span>
                   </span>

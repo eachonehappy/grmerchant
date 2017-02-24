@@ -39,6 +39,11 @@
     <%= f.select :non_veg, options_for_select([['NonVeg','true'],['Veg','false']]),
       {}, :class=> "form-control"%>
   </div>
+    <div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, options_for_select([['MERCHANT','merchant'],['MANAGER','manager'],['OPERATOR','operator'],['DATA ENTRY','data_entry']]),
+      {}, :class=> "form-control"%>
+  </div>
 
   <div class="actions">
     <%= f.submit "Submit", :class=>"btn btn-primary", data: { turbolinks: false } %>

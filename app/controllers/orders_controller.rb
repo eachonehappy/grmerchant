@@ -2,17 +2,18 @@ require "http"
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :admin_user? , only: [:index]
+  before_action :admin? , only: [:destroy]
   before_action :shop_opened , only: [:new]
 
   # GET /orders
   # GET /orders.json
   def index
-    
+
     @orders = Order.all.sort_by(&:created_at).reverse
     @stat = Stat.first
     @shop_open = Stat.first.shop_open
     @stat_second = Stat.new
+    
   end
 
   # GET /orders/1
@@ -26,7 +27,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-   
+   @cart_recipes = current_user.recipes
+    if @cart_recipes.empty?
+      redirect_to root_path, notice: 'Please Add Recipe Kit In Cart'
+    else
     @customer_address = CustomerAddress.new
     @order = Order.new
     @notes_order = NotesOrder.new
@@ -37,6 +41,8 @@ class OrdersController < ApplicationController
       @customer = Customer.new
     end  
     @stat = Stat.first
+   end
+    
   end
 
   # GET /orders/1/edit
@@ -88,15 +94,28 @@ class OrdersController < ApplicationController
         @order.mode_of_payment = params[:mode_of_payment]
         if params[:delivery_time].present?
           @order.delivery_time = params[:delivery_time]
+          params[:delivery_time].split("/")[1].split("-")[0][0..1] > Time.now.strftime('%H')
+           
+          
           unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
             @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
             @order.preorder = true
           else
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)  
+            
+            if params[:delivery_time].split("/")[1].split("-")[0].to_time > (Time.now + 2.hours)
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.preorder = true
+            else
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+            end  
           end  
         else
           @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+          if Time.current.to_s.split(" ")[1].split(":")[0] > "19"
+             @order.delivery_time = "#{(Time.now + 1.day).strftime('%d%m%Y')}/10AM-11AM"
+          else
           @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
+          end
         end
         @order.o_id = "#{current_user.merchant_pin}#{(Time.now).strftime('%d%m%Y')}#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
         
@@ -169,11 +188,20 @@ class OrdersController < ApplicationController
             @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
             @order.preorder = true
           else
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)  
+            if params[:delivery_time].split("/")[1].split("-")[0].to_time > (Time.now + 2.hours)
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.preorder = true
+            else
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+            end  
           end  
         else
           @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+         if Time.current.to_s.split(" ")[1].split(":")[0] > "19"
+             @order.delivery_time = "#{(Time.now + 1.day).strftime('%d%m%Y')}/10AM-11AM"
+          else
           @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
+          end
         end  
         @order.o_id = "#{current_user.merchant_pin}#{(Time.now).strftime('%d%m%Y')}#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
         respond_to do |format|

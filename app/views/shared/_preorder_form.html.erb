@@ -3,11 +3,11 @@
 <div class="col-md-12 col-sm-1 col-xs-12">
   <div class="" role="tabpanel" data-example-id="togglable-tabs">
     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Today </a>
+      <li role="presentation" class="active"><a  id="home-tab" role="tab"  aria-expanded="true" <% unless Date.today.to_time.strftime("%A") == "Tuesday"%> href="#tab_content1" data-toggle="tab">Today<%else%> >Closed<%end%>  </a>
       </li>
-      <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Tommorow</a>
+      <li role="presentation" ><a class="disabled" role="tab" id="profile-tab"  aria-expanded="false" <% unless Date.tomorrow.to_time.strftime("%A") == "Tuesday"%> href="#tab_content2" data-toggle="tab">Tommorow<%else%> >Closed<%end%></a>
       </li>
-      <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Day after Tommorow</a>
+      <li role="presentation" class=""><a  role="tab" id="profile-tab2"  aria-expanded="false" <% unless Date.tomorrow.tomorrow.to_time.strftime("%A") == "Tuesday"%> href="#tab_content3" data-toggle="tab">Day after Tommorow<%else%> >Closed<%end%></a>
       </li>
     </ul>
     <div id="myTabContent" class="tab-content">
@@ -32,8 +32,8 @@
             <%end%>></div>
           </label>
           <label class="control control--radio">7-8 PM
-            <input type="radio" name="delivery_time" value=<%="#{today_date}/07PM-08PM"%> <%="disabled" if current_hour > "18" %>/>
-            <div class="control__indicator" <% if current_hour > "18" %>
+            <input type="radio" name="delivery_time" value=<%="#{today_date}/07PM-08PM"%> <%="disabled" if current_hour > "17" %>/>
+            <div class="control__indicator" <% if current_hour > "17" %>
             style="background: #c9302c;" 
             <%end%>></div>
           </label>
@@ -58,8 +58,8 @@
             <%end%>></div>
           </label>
           <label class="control control--radio">8-9 PM
-            <input type="radio" name="delivery_time" value=<%="#{today_date}/08PM-09PM"%> <%="disabled" if current_hour > "19" %>/>
-            <div class="control__indicator" <% if current_hour > "19" %>
+            <input type="radio" name="delivery_time" value=<%="#{today_date}/08PM-09PM"%> <%="disabled" if current_hour > "18" %>/>
+            <div class="control__indicator" <% if current_hour > "18" %>
             style="background: #c9302c;" 
             <%end%>></div>
           </label>
@@ -84,8 +84,8 @@
             <%end%>></div>
           </label>
           <label class="control control--radio">9-10 PM
-            <input type="radio" name="delivery_time" value=<%="#{today_date}/09PM-10PM"%> <%="disabled" if current_hour > "20" %> />
-            <div class="control__indicator" <% if current_hour > "20" %>
+            <input type="radio" name="delivery_time" value=<%="#{today_date}/09PM-10PM"%> <%="disabled" if current_hour > "19" %> />
+            <div class="control__indicator" <% if current_hour > "19" %>
             style="background: #c9302c;" 
             <%end%>></div>
           </label>
