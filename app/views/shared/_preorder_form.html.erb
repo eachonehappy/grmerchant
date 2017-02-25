@@ -3,9 +3,9 @@
 <div class="col-md-12 col-sm-1 col-xs-12">
   <div class="" role="tabpanel" data-example-id="togglable-tabs">
     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-      <li role="presentation" class="active"><a  id="home-tab" role="tab"  aria-expanded="true" <% unless Date.today.to_time.strftime("%A") == "Tuesday"%> href="#tab_content1" data-toggle="tab">AAJ<%else%> >Closed<%end%>  </a>
+      <li role="presentation" class="active"><a  id="home-tab" role="tab"  aria-expanded="true" <% unless Date.today.to_time.strftime("%A") == "Tuesday"%> href="#tab_content1" data-toggle="tab">  AAJ<%else%> >Closed<%end%>  </a>
       </li>
-      <li role="presentation" ><a class="disabled" role="tab" id="profile-tab"  aria-expanded="false" <% unless Date.tomorrow.to_time.strftime("%A") == "Tuesday"%> href="#tab_content2" data-toggle="tab">KAL<%else%> >Closed<%end%></a>
+      <li role="presentation" ><a class="disabled" role="tab" id="profile-tab"  aria-expanded="false" <% unless Date.tomorrow.to_time.strftime("%A") == "Tuesday"%> href="#tab_content2" data-toggle="tab">  KAL<%else%> >Closed<%end%></a>
       </li>
       <li role="presentation" class=""><a  role="tab" id="profile-tab2"  aria-expanded="false" <% unless Date.tomorrow.tomorrow.to_time.strftime("%A") == "Tuesday"%> href="#tab_content3" data-toggle="tab">PARSO<%else%> >Closed<%end%></a>
       </li>
