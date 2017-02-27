@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :merchants
   resources :customers
   resources :sms_messages
+  resources :merchant_informations
   get 'cart'=> 'pages#cart'
 
   put 'add_to_cart' => 'recipes#add_to_cart'
@@ -48,6 +49,7 @@ Rails.application.routes.draw do
   patch 'orders' => "orders#index"
   patch 'merchants' => "merchants#index"
   post 'set_sms' => "sms_messages#set_sms"
+  post 'accept_merchant_information' => "merchant_informations#accept_merchant_information"
   devise_for :users, controllers: { sessions: 'users/sessions' ,:registrations => "users/registrations" }
 
 

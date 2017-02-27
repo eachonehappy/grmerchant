@@ -1,0 +1,34 @@
+<div class="x_panel">
+  <div class="x_content">
+  <center>
+<h1>Merchant Application Form</h1>
+</center>
+<%= form_for(@merchant_information) do |f| %>
+
+
+
+  <div class="field">
+    <%= f.label :full_name %><br />
+    <%= f.text_field :full_name, autofocus: true, :class=> "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_area :address, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone, autofocus: true , :class=> "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :Veg_NonVeg %><br />
+    <%= f.select :non_veg, options_for_select([['ALL','true'],['VEG','false']]),
+      {}, :class=> "form-control"%>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit "Create Merchant" ,:class=>"btn btn-success btn-block btn-lg", data: { turbolinks: false } %>
+  </div>
+<% end %>
+</div>
+</div>

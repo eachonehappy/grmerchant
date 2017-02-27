@@ -30,7 +30,12 @@
         <li>
           <%= link_to 'MERCHANTS' , merchants_path , data: { turbolinks: false },:class=>"user-profile dropdown-toggle" %>
         </li>
-        <% end %>      
+        <% end %> 
+        <% if admin %>
+        <li>
+          <%= link_to 'MERCHANTS APPLICATIONS' , merchant_informations_path , data: { turbolinks: false },:class=>"user-profile dropdown-toggle" %>
+        </li>
+        <% end %>     
       </ul>
 
       <% if merchant %>

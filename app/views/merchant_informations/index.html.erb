@@ -1,0 +1,65 @@
+
+<p id="notice"><%= notice %></p>
+
+
+
+
+<div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+     
+          <div class="x_content">
+          <center>
+            <h1>Merchants</h1></center>
+            <table id="datatable" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+         
+                  <th>Name</th>
+              
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>VEG NONVEG</th>
+                  
+                  <th>Action</th>
+                  
+                  
+                </tr>
+              </thead>
+
+
+              <tbody>
+              <% @merchant_informations.each do |merchant_information| %>
+                <tr>
+                 
+                  <td class="text-uppercase"><%= merchant_information.full_name %></td>
+                 
+                  <td class="text-uppercase"><%= merchant_information.address %></td>
+                  <td><%= merchant_information.phone %></td>
+                   <td>
+                 <% if merchant_information.non_veg %>
+                 <a class="btn btn-default">All</a>
+                 <% else %>
+                  <a class="btn btn-default">VEG</a>
+                    <% end %>
+                  </td>
+                  
+                  <td>
+                 <% if merchant_information.is_accepted %>
+                 <a class="btn btn-default">Accepted</a>
+                 <% else %>
+                  <%= link_to 'Accept', accept_merchant_information_path(merchant_information), method: :post, data: { confirm: 'Are you sure?' } ,:class=> "btn btn-success"%>
+                    <% end %>
+                  </td>
+               
+                </tr>
+                <% end %>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>

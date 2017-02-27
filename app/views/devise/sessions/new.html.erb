@@ -17,7 +17,18 @@
               </div>
               <div>
               <%= f.submit "Log in",:class=>"btn btn-lg btn-success btn-block submit", :style => "margin-left:0px;" %>   
-              </div>        
+              </div> 
+          
+            <br><br>
+             <div class="separator">
+                <p class="change_link h3"><b> New Merchant? </b>
+                <%= link_to "Apply" , new_merchant_information_path , class: 
+                "btn btn-success btn-sm" , style: "margin-top: 0px;"%>
+                  
+                </p>
+
+                
+              </div>
             </form>
             <% end %>
           </section>

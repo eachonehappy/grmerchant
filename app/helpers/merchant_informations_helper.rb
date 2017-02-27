@@ -1,0 +1,2 @@
+module MerchantInformationsHelper
+end
