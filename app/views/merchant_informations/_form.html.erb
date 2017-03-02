@@ -9,15 +9,15 @@
 
   <div class="field">
     <%= f.label :full_name %><br />
-    <%= f.text_field :full_name, autofocus: true, :class=> "form-control" %>
+    <%= f.text_field :full_name, autofocus: true, :class=> "form-control",:required=>"required", :placeholder=>"ENTER MERCHANT'S NAME" %>
   </div>
   <div class="field">
     <%= f.label :address %><br />
-    <%= f.text_area :address, autofocus: true , :class=> "form-control"%>
+    <%= f.text_area :address, autofocus: true , :class=> "form-control",:required=>"required", :placeholder=>"ENTER MERCHANT'S ADDRESS"%>
   </div>
   <div class="field">
     <%= f.label :phone %><br />
-    <%= f.text_field :phone, autofocus: true , :class=> "form-control"%>
+    <%= f.text_field :phone, autofocus: true , :class=> "form-control", :type=>"tel", :pattern=>"^[2-9]{2}[0-9]{8}$", :placeholder=>"ENTER 10 DIGIT CUSTOMER'S MOBILE NUMBER"%>
   </div>
   <div class="field">
     <%= f.label :Veg_NonVeg %><br />
@@ -25,9 +25,17 @@
       {}, :class=> "form-control"%>
   </div>
 
+  <div class="field">
+   <label class="control control--radio"><span>I agree to Terms and Conditions.</span>
+            <input type="checkbox" name="color" value="black" required="required" />
+            <div class="control__indicator" ></div>
+          </label>
+    
+</div>
+
 
   <div class="actions">
-    <%= f.submit "Create Merchant" ,:class=>"btn btn-success btn-block btn-lg", data: { turbolinks: false } %>
+    <%= f.submit "Create Merchant" ,:class=>"big-blue-btn btn btn-success btn-block btn-lg", data: { turbolinks: false } %>
   </div>
 <% end %>
 </div>

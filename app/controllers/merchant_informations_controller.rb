@@ -18,7 +18,7 @@ class MerchantInformationsController < ApplicationController
 
     respond_to do |format|
       if @merchant_information.save
-        format.html { redirect_to new_merchant_information_path, notice: 'Merchant was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Merchant was successfully created.' }
         format.json { render :show, status: :created, location: @merchant_information }
       else
         @merchant_informations = MerchantInformation.all - MerchantInformation.where(:role => "admin")
@@ -38,7 +38,7 @@ class MerchantInformationsController < ApplicationController
     @merchant_information = MerchantInformation.find(params[:id])
     respond_to do |format|
       if @merchant_information.update(merchant_information_params)
-        format.html { redirect_to new_merchant_information_path, notice: 'Merchant was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Merchant was successfully updated.' }
         format.json { render :show, status: :ok, location: @merchant_information }
       else
         format.html { render :edit }
