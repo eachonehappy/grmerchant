@@ -37,7 +37,14 @@
                
                 </tr>
                  <% end %>
-                
+                <tr>
+                 
+                  <td></td>
+                  <td></td>
+                   <td class="text-uppercase">Delivery Charges</td>
+                  <td>Rs. <span class="h4">11</span></td>
+               
+                </tr>
                
                 
               </tbody>
@@ -51,7 +58,7 @@
                    <span class="h4">
                    
                   TOTAL AMOUNT = <span class="h3">
-                    Rs. <%=current_user.recipes.map(&:price).inject(0, :+)%>
+                    Rs. <%=current_user.recipes.map(&:price).inject(0, :+) + 11%>
                   </span>
                   </span>
                   

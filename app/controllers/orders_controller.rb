@@ -98,19 +98,19 @@ class OrdersController < ApplicationController
            
           
           unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100 + 11
             @order.preorder = true
           else
             
             if params[:delivery_time].split("/")[1].split("-")[0].to_time > (Time.now + 2.hours)
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100 + 11
             @order.preorder = true
             else
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+) + 11
             end  
           end  
         else
-          @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+          @order.amount = @cart_recipes.map(&:price).inject(0, :+) + 11
           if Time.current.to_s.split(" ")[1].split(":")[0] > "19"
              @order.delivery_time = "#{(Time.now + 1.day).strftime('%d%m%Y')}/10AM-11AM"
           else
@@ -186,18 +186,18 @@ class OrdersController < ApplicationController
         if params[:delivery_time].present?
           @order.delivery_time = params[:delivery_time]
           unless params[:delivery_time].split("/")[0] == (Time.now).strftime('%d%m%Y')
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100 + 11
             @order.preorder = true
           else
             if params[:delivery_time].split("/")[1].split("-")[0].to_time > (Time.now + 2.hours)
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+)*(100 - @stat.discount.to_f)/100 + 11
             @order.preorder = true
             else
-            @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+            @order.amount = @cart_recipes.map(&:price).inject(0, :+) + 11
             end  
           end  
         else
-          @order.amount = @cart_recipes.map(&:price).inject(0, :+)
+          @order.amount = @cart_recipes.map(&:price).inject(0, :+) + 11
          if Time.current.to_s.split(" ")[1].split(":")[0] > "19"
              @order.delivery_time = "#{(Time.now + 1.day).strftime('%d%m%Y')}/10AM-11AM"
           else
