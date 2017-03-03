@@ -2,7 +2,7 @@ require "http"
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :admin? , only: [:destroy]
+  before_action :admin? || :manager? || :operator?, only: [:destroy, :index]
   before_action :shop_opened , only: [:new]
 
 

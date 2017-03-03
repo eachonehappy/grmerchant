@@ -40,7 +40,7 @@ $(document).ready(function() {
         "paging":   false,
         "ordering": true,
         "info":     false,
-        "order": [[ 1, "desc" ]]
+        "order": [[ 0, "desc" ]]
     } );
 
 } );
@@ -50,7 +50,7 @@ $(document).ready(function() {
         "paging":   true,
         "ordering": true,
         "info":     false,
-        "order": [[ 1, "desc" ]]
+        "order": [[ 0, "desc" ]]
     } );
 
 } );
