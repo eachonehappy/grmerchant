@@ -112,9 +112,10 @@ class OrdersController < ApplicationController
         else
           @order.amount = @cart_recipes.map(&:price).inject(0, :+) + 11
           if Time.current.to_s.split(" ")[1].split(":")[0] > "19"
-             @order.delivery_time = "#{(Time.now + 1.day).strftime('%d%m%Y')}/10AM-11AM"
+             @order.delivery_time = "#{(Time.current + 1.day).strftime('%d%m%Y')}/10AM-11AM"
           else
-          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
+
+          @order.delivery_time = "#{(Time.current).strftime('%d%m%Y')}/#{(Time.current + 2.hours).strftime("%I%p")}-#{(Time.current + 3.hours).strftime("%I%p")}"  
           end
         end
         @order.o_id = "#{current_user.merchant_pin}#{(Time.now).strftime('%d%m%Y')}#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
@@ -199,9 +200,9 @@ class OrdersController < ApplicationController
         else
           @order.amount = @cart_recipes.map(&:price).inject(0, :+) + 11
          if Time.current.to_s.split(" ")[1].split(":")[0] > "19"
-             @order.delivery_time = "#{(Time.now + 1.day).strftime('%d%m%Y')}/10AM-11AM"
+             @order.delivery_time = "#{(Time.current + 1.day).strftime('%d%m%Y')}/10AM-11AM"
           else
-          @order.delivery_time = "#{(Time.now).strftime('%d%m%Y')}/#{(Time.now + 2.hours).strftime("%I%p")}-#{(Time.now + 3.hours).strftime("%I%p")}"  
+          @order.delivery_time = "#{(Time.current).strftime('%d%m%Y')}/#{(Time.current + 2.hours).strftime("%I%p")}-#{(Time.current + 3.hours).strftime("%I%p")}"  
           end
         end  
         @order.o_id = "#{current_user.merchant_pin}#{(Time.now).strftime('%d%m%Y')}#{current_user.orders.where("created_at >= ?", Time.zone.now.beginning_of_day).count}"
