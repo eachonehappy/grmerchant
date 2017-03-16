@@ -1,24 +1,24 @@
 default: &default
- adapter: postgresql
+ adapter: mysql2
  encoding: utf8
  pool: 5
 
 development:
  <<: *default
- username: postgres
- password: postgres
+ username: root
+ password: mysql
  host: localhost  
  database: grmerchant_development
 
 test:
  <<: *default
- username: postgres
- password: postgres
+ username: root
+ password: mysql
  host: localhost  
  database: grmerchant_test
 
 production:
  <<: *default
- username: deployer
- password: postgres 
+ username: root
+ password: mysql
  database: grmerchant_production
