@@ -63,15 +63,16 @@
               </li>
             </ul>
           </li>
-          <li role="presentation" class="dropdown" >
-            <a class="nohover btn-success dropdown-toggle info-number", style="padding-bottom:9px;padding-top: 8px;" ><b>
-           <span style="color:white;">Rs <span class="addtocart-count h1" data-id="<%= current_user.id %>"><%= current_user.wallet %></span> </b><i class="fa fa-money"></i></span>
-            </a>
-          </li>
+          
           <li role="presentation" class="dropdown" >
             <%= link_to cart_path , :class=> "nohover btn-success dropdown-toggle info-number",:style=> "padding-bottom:9px;padding-top: 8px;" ,data: { turbolinks: false } do %><b>
             <span style="color:white;"> <span class="addtocart-count h1" data-id="<%= current_user.id %>"><%= current_user.cart_recipes.count %></span> ITEMS ADDED </b><i class="fa fa-shopping-cart"></i></span>
             <% end %>
+          </li>
+          <li role="presentation" class="dropdown" >
+            <a class="nohover btn-success dropdown-toggle info-number", style="padding-bottom:9px;padding-top: 8px;" ><b>
+           <span style="color:white;">Rs <span class="addtocart-count h1" data-id="<%= current_user.id %>"><%= current_user.wallet %></span> </b></span><img src="/images/wallet.png" width="30" style="margin-top: -20px;">
+            </a>
           </li>
         </ul>
       <% end %>
