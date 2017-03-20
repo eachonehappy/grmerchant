@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(version: 20170320052421) do
     t.datetime "updated_at",                               null: false
     t.boolean  "availability",             default: false
     t.string   "cusine",       limit: 255
-    t.string   "ingredients",  limit: 255
   end
 
   create_table "sms_messages", force: :cascade do |t|
