@@ -40,14 +40,14 @@
 
       <% if merchant %>
         <ul class="nav navbar-nav navbar-right">
-          <li>
+          <li >
             <a href="javascript:;"  class="btn-danger user-profile dropdown-toggle text-uppercase active" data-toggle="dropdown" aria-expanded="true" style="padding-top: 22px;padding-bottom: 9px;">
                 <span class="h5" style="color:white;margin-right:5px;" >
                  <%= current_user.full_name%></span>
                   <span class=" fa fa-angle-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right">
-            <li>
+            <li >
             <a><b>
            Rs <span class="addtocart-count h1" ><%= current_user.wallet %></span> </b><img class="pull-right" src="/images/wallet.png" width="30" >
             </a>
