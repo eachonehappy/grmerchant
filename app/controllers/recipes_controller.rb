@@ -69,22 +69,26 @@ class RecipesController < ApplicationController
 
   def add_to_cart
     @recipe = Recipe.find(params[:format])
-    if current_user.recipes.count < 5 && current_user.recipes.map(&:price).inject(0, :+) < current_user.wallet 
-      if @recipe.availability
-        @recipe.cart_recipes.build(user_id: current_user.id)
-        @recipe.save
-        if request.xhr?
-          @count = current_user.cart_recipes.count
-          render json: { count: @count , id: current_user.id }
+    unless current_user.recipes.map(&:price).inject(0, :+) + @recipe.price > current_user.wallet 
+      if current_user.recipes.count < 5 
+        if @recipe.availability
+          @recipe.cart_recipes.build(user_id: current_user.id)
+          @recipe.save
+          if request.xhr?
+            @count = current_user.cart_recipes.count
+            render json: { count: @count , id: current_user.id }
+          else
+            redirect_to request.referer_path
+          end
         else
-          redirect_to request.referer_path
+          redirect_to root_path , notice: 'This Recipe is not available for Now' 
         end
       else
-        redirect_to root_path , notice: 'This Recipe is not available for Now' 
-      end
+      redirect_to root_path, notice: 'More Than 5 Recipes cannot be added in Cart'
+      end 
     else
-    redirect_to root_path, notice: 'More Than 5 Recipes cannot be added in Cart'
-    end 
+      redirect_to root_path, notice: 'Add Money In Walley by Recharge'
+    end   
   end
 
   def remove_cart_item
