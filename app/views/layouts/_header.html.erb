@@ -1,13 +1,13 @@
 <div class="top_nav navbar-fixed-top" style="margin-left: 0px;">
   <div class="nav_menu">
     <nav>      
-    	<%= link_to root_path, :style=>"background-color:#ededed;", data: { turbolinks: false } do %>
+      <%= link_to root_path, :style=>"background-color:#ededed;", data: { turbolinks: false } do %>
       <img src="/images/GR-logo-new.png" width="50px" style="padding-top:5px;margin-left:5px;">
       <%end%>
       <ul class="nav navbar-nav navbar-right">
         <% unless merchant %>      
         <li>
-        	<%= link_to 'Log Out'.html_safe, destroy_user_session_path,
+          <%= link_to 'Log Out'.html_safe, destroy_user_session_path,
                 :method => :delete ,:class=>"user-profile dropdown-toggle"%>
         </li>
         <% end %>
@@ -40,7 +40,7 @@
 
       <% if merchant %>
         <ul class="nav navbar-nav navbar-right">
-          <li >
+          <li>
             <a href="javascript:;"  class="btn-danger user-profile dropdown-toggle text-uppercase active" data-toggle="dropdown" aria-expanded="true" style="padding-top: 22px;padding-bottom: 9px;">
                 <span class="h5" style="color:white;margin-right:5px;" >
                  <%= current_user.full_name%></span>
@@ -48,18 +48,17 @@
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right">
             <li >
-            <a><b>
-           Rs <span class="addtocart-count h1" ><%= current_user.wallet %></span> </b><img class="pull-right" src="/images/wallet.png" width="30" >
-            </a>
-          </li>
-              <li>
+          <a><b>
+          Rs <span class="h1" ><%= current_user.wallet %></span> </b><img class="pull-right" src="/images/wallet.png" width="30" >
+          </a>
+        </li>
+                      <li>
                 <a><i class="fa fa-phone pull-right"></i> 0129-414-6687
                 </a>
               </li>
               <li>
                 <%= link_to 'My Orders' , my_orders_path, data: { turbolinks: false } %>
-              </li>
-
+              </li>    
               <li>
               <%= link_to  destroy_user_session_path,
                   :method => :delete, data: { turbolinks: false } do %>
@@ -69,13 +68,11 @@
               </li>
             </ul>
           </li>
-          
           <li role="presentation" class="dropdown" >
             <%= link_to cart_path , :class=> "nohover btn-success dropdown-toggle info-number",:style=> "padding-bottom:9px;padding-top: 8px;" ,data: { turbolinks: false } do %><b>
             <span style="color:white;"> <span class="addtocart-count h1" data-id="<%= current_user.id %>"><%= current_user.cart_recipes.count %></span> ITEMS ADDED </b><i class="fa fa-shopping-cart"></i></span>
             <% end %>
           </li>
-         
         </ul>
       <% end %>
     </nav>
@@ -105,8 +102,4 @@
       </center>
     <%end%>
   <%end%>  
-</div>                        
-
-
-                        
-  
+</div>
