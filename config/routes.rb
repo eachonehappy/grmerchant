@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :customers
   resources :sms_messages
   resources :merchant_informations
+  post 'add_wallet_money' => 'merchants#add_wallet_money'
   get 'cart'=> 'pages#cart'
 
   put 'add_to_cart' => 'recipes#add_to_cart'

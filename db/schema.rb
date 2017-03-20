@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227113614) do
+ActiveRecord::Schema.define(version: 20170320052421) do
 
   create_table "cart_recipes", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20170227113614) do
     t.datetime "updated_at",                               null: false
     t.boolean  "availability",             default: false
     t.string   "cusine",       limit: 255
+    t.string   "ingredients",  limit: 255
   end
 
   create_table "sms_messages", force: :cascade do |t|
@@ -123,6 +124,12 @@ ActiveRecord::Schema.define(version: 20170227113614) do
     t.string   "discount",   limit: 255
     t.boolean  "sms_accept",             default: false
     t.string   "pin",        limit: 255
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.string   "url",        limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -143,6 +150,7 @@ ActiveRecord::Schema.define(version: 20170227113614) do
     t.datetime "updated_at",                                                null: false
     t.text     "phone",                  limit: 65535
     t.string   "role",                   limit: 255,   default: "merchant"
+    t.float    "wallet",                 limit: 24,    default: 0.0
   end
 
   add_index "users", ["merchant_pin"], name: "index_users_on_merchant_pin", unique: true, using: :btree

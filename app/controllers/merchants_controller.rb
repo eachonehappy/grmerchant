@@ -1,6 +1,7 @@
 class MerchantsController < ApplicationController
   before_action :authenticate_user!
   before_action :admin? || :marketing? , only: [ :destroy, :new]
+  before_action :admin? , only: [ :add_wallet_moneyd]
 
   def index
 	
@@ -52,6 +53,13 @@ class MerchantsController < ApplicationController
   
       redirect_to merchants_path, notice: 'Merchant was successfully destroyed.' 
      
+  end
+
+  def add_wallet_money
+    @user = User.find(params[:user_id])
+    @user.wallet = @user.wallet + params[:user][:wallet].to_f
+    @user.save
+    redirect_to request.referer
   end
 
   private

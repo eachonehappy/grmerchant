@@ -141,6 +141,10 @@ class OrdersController < ApplicationController
               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
             #  ExampleMailer.sample_email.deliver
+            
+            @wallet_user = current_user
+            @wallet_user.wallet = @wallet_user.wallet - @order.amount
+            @wallet_user.save
             format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }
           else
@@ -221,6 +225,9 @@ class OrdersController < ApplicationController
             else
               HTTP.get("http://sms.bulksms.net.in/api/pushsms.php?username=RISHII&password=5413&sender=GRFOOD&message=#{@message}+Total+Rs+#{@order.amount}+Delivered+by+#{@order.delivery_time}+is+under+Review+#{@stat_message}&numbers=#{@customer.phone}&unicode=false&flash=true")
               end
+              @wallet_user = current_user
+            @wallet_user.wallet = @wallet_user.wallet - @order.amount
+            @wallet_user.save
              # ExampleMailer.sample_email.deliver
                format.html { redirect_to order_path(@order), notice: 'Order was successfull.' }
             format.json { render :show, status: :created, location: @order }

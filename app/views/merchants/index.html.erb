@@ -19,7 +19,9 @@
                   <th>Role</th>
                   <th>Address</th>
                   <th>Phone</th>
+                  <th>Wallet</th>
                   <% if admin %>
+                   <th>Wallet</th>
                   <th>Action</th>
                   <% end %>
                   
@@ -35,7 +37,35 @@
                   <td class="text-uppercase"><%= user.role %></td>
                   <td class="text-uppercase"><%= user.address %></td>
                   <td><%= user.phone %></td>
+                  <td><%= user.wallet %></td>
                   <% if admin %>
+                  <td> <div class="form-inline">
+            <%= form_for(@user, url: add_wallet_money_path) do |f| %>
+            <!-- start form for validation -->
+           <form id="demo-form" data-parsley-validate>
+              <label for="fullname">Add Money</label>
+              <%= hidden_field_tag 'user_id', user.id %>
+              <%= f.text_field :wallet ,:class=> "form-control", data: { turbolinks: false }%>
+            
+             
+
+
+            
+             <%= f.submit "Update",:class=>"btn btn-success submit", :style=>"margin-top:5px" %>
+
+
+                  
+
+            </form>
+             <% end %>
+             </div>
+
+
+
+
+
+
+            </td>
                   <td>
                   <%= link_to 'Edit', edit_merchant_path(user), :class=> "btn btn-primary", data: { turbolinks: false } %>
                   <%= link_to 'Destroy', delete_merchant_path(user), method: :delete, data: { confirm: 'Are you sure?' } ,:class=> "btn btn-danger"%>

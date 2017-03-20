@@ -68,9 +68,8 @@ class RecipesController < ApplicationController
   end
 
   def add_to_cart
-
     @recipe = Recipe.find(params[:format])
-    if current_user.recipes.count < 5
+    if current_user.recipes.count < 5 && current_user.recipes.map(&:price).inject(0, :+) < current_user.wallet 
       if @recipe.availability
         @recipe.cart_recipes.build(user_id: current_user.id)
         @recipe.save

@@ -1,0 +1,8 @@
+{
+"ingredient_order": "1",
+	"ingredient_name": "Ghee",
+	"brand": [{"brand_name":"amul", "brand_cost":"400", "default": "true"
+	},{
+		"brand_name":"Hudson", "brand_cost": "450"
+	} ]
+}
